@@ -59,23 +59,23 @@ public class GameEngine{
       
         Room cocoyashi, nooberland, wanoKuni, water7, kalen,ortopia,alabasta,krakenland,amazoneLily,skypia,paris8,rafel,pontDuJoie,elMourouj,parcB,laMarsa,sidiBouSaid;
               
-        cocoyashi = new Room("Cocoyashi","src/imageskokoyashi.png");
-        nooberland = new Room("Nooberland","src/imagesNooberland.png");
-        wanoKuni = new Room("Wano_kuni","src/imageswanokuni.png");
-        water7 = new Room("Water7","src/imagesWater_Seven.png");
-        kalen = new Room("Kalen","src/imageskalen.png");
-        ortopia = new Room("Ortopia","src/imagesOrtopia.png");
-        alabasta = new Room("Alabasta","src/imagesAlabasta.png");
-        krakenland = new Room("Krakenland","src/imagesKrakenland.png");
-        amazoneLily = new Room("Amazone_lily","src/imagesAmazonLily.png");
-        skypia = new Room("Skypia","src/imagesskypia.png");
-        paris8 = new Room("Paris8, il semble que vous avez découvert une île absente sur votre carte, et si vous l'exploriez ?","src/imagesparis8.png");
-        rafel = new Room("Rafel, ~votre log pose n'arrête pas de s'agiter ...~","src/imagesraftel.png");
-        pontDuJoie = new Room("Pont Du joie ce pont fondé pour un but artistique ","src/imagespontdujoie.png");
-        elMourouj= new Room("El Mourouj c'est un quartier populaire par ces créatures qui vont vous aidez ","src/imageselmourouj.jpg");
-        parcB = new Room("Parc B c'est un parc de l'Esperance Sportif De Tunis fondé en 1919","src/imagesparcb.jpg");
-        laMarsa = new Room("La marsa c'est la plage la plus douce ","src/imageslamarsa.jpg");
-        sidiBouSaid = new Room("Sidi bou Said c'est la meilleur vue du monde ","src/imagessidibousaid.jpg");
+        cocoyashi = new Room("Cocoyashi","images/kokoyashi.png");
+        nooberland = new Room("Nooberland","images/Nooberland.png");
+        wanoKuni = new Room("Wano_kuni","images/wanokuni.png");
+        water7 = new Room("Water7","images/Water_Seven.png");
+        kalen = new Room("Kalen","images/kalen.png");
+        ortopia = new Room("Ortopia","images/Ortopia.png");
+        alabasta = new Room("Alabasta","images/Alabasta.png");
+        krakenland = new Room("Krakenland","images/Krakenland.png");
+        amazoneLily = new Room("Amazone_lily","images/AmazonLily.png");
+        skypia = new Room("Skypia","images/skypia.png");
+        paris8 = new Room("Paris8, il semble que vous avez découvert une île absente sur votre carte, et si vous l'exploriez ?","images/paris8.png");
+        rafel = new Room("Rafel, ~votre log pose n'arrête pas de s'agiter ...~","images/raftel.png");
+        pontDuJoie = new Room("Pont Du joie ce pont fondé pour un but artistique ","images/pontdujoie.png");
+        elMourouj= new Room("El Mourouj c'est un quartier populaire par ces créatures qui vont vous aidez ","images/elmourouj.jpg");
+        parcB = new Room("Parc B c'est un parc de l'Esperance Sportif De Tunis fondé en 1919","images/parcb.jpg");
+        laMarsa = new Room("La marsa c'est la plage la plus douce ","images/lamarsa.jpg");
+        sidiBouSaid = new Room("Sidi bou Said c'est la meilleur vue du monde ","images/sidibousaid.jpg");
         // initialise room exits & items
         cocoyashi.setExits("north",nooberland);
         cocoyashi.addItems("gold",new Item("this item have 2000 years",10,10));
