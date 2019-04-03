@@ -1,0 +1,9 @@
+go north
+go northWest
+go north
+go east
+go south
+go northEast
+go northEast
+go northWest 
+look

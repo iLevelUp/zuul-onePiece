@@ -1,4 +1,4 @@
-
+package src;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
@@ -13,7 +13,8 @@ public class UserInterface implements ActionListener{
 	    private JTextField entryField;
 	    private JTextArea log;
 	    private JLabel image;
-	    private JButton north,northEast,northWest,east,west,southEast,southWest,south,look,help,eat,none;
+		private JButton north,northEast,northWest,east,west,southEast,southWest,south,look,help,back,none;
+	    private Parser parser;
 	    /**
 	     * Construct a UserInterface. As a parameter, a Game Engine
 	     * (an object processing and executing the game commands) is
@@ -25,6 +26,7 @@ public class UserInterface implements ActionListener{
 	    {
 	        engine = gameEngine;
 	        createGUI();
+	        parser = new Parser();
 	    }
 
 	    /**
@@ -66,8 +68,23 @@ public class UserInterface implements ActionListener{
 	    public void enable(boolean on)
 	    {
 	        entryField.setEditable(on);
-	        if(!on)
+	        if(!on) {
 	            entryField.getCaret().setBlinkRate(0);
+	            showImage("src/images/lose.jpg");
+				look.removeActionListener(this);
+				north.removeActionListener(this);
+				northEast.removeActionListener(this);
+				northWest.removeActionListener(this);
+				east.removeActionListener(this);
+				west.removeActionListener(this);
+				southEast.removeActionListener(this);
+				southWest.removeActionListener(this);
+				south.removeActionListener(this);
+				help.removeActionListener(this);
+				back.removeActionListener(this);
+				
+
+	        }
 	    }
 
 	    /**
@@ -216,14 +233,14 @@ public class UserInterface implements ActionListener{
 			panel.add(help,gbc);
 
 
-			eat=new JButton("Eat");
-			eat.setPreferredSize(new Dimension(60, 20));
+			back=new JButton("Back");
+			back.setPreferredSize(new Dimension(60, 20));
 			gbc.gridx=3;
 			gbc.gridy=7;
 			gbc.gridheight=1;
 	        gbc.gridwidth=1;
-			eat.addActionListener(this);
-			panel.add(eat,gbc);
+			back.addActionListener(this);
+			panel.add(back,gbc);
 
 			look=new JButton("Look");
 			look.setPreferredSize(new Dimension(80, 20));
@@ -257,37 +274,37 @@ public class UserInterface implements ActionListener{
 	        // there is only one possible action: text entry
 	        Object  source=e.getSource();
 			if  (source==north)
-	        	engine.interpretCommand("go north");
+	        	engine.interpretCommand(new Command(CommandWord.GO,"north"));
 
 	        else if(source == northWest)
-	        	engine.interpretCommand("go northWest");
+	        	engine.interpretCommand(new Command(CommandWord.GO,"northWest"));
 
 	        else if(source == northEast)
-	        	engine.interpretCommand("go northEast");
+	        	engine.interpretCommand(new Command(CommandWord.GO,"northEast"));
 
 	        else if(source == west)
-	        	engine.interpretCommand("go west");
+	        	engine.interpretCommand(new Command(CommandWord.GO,"west"));
 
 	        else if(source == east)
-	        	engine.interpretCommand("go east");
+	        	engine.interpretCommand(new Command(CommandWord.GO,"east"));
 
 	        else if(source == southWest)
-	        	engine.interpretCommand("go southWest");
+	        	engine.interpretCommand(new Command(CommandWord.GO,"southWest"));
 
 	        else if(source == southEast)
-	        	engine.interpretCommand("go southEast");
+	        	engine.interpretCommand(new Command(CommandWord.GO,"southEast"));
 
 	        else if(source == south)
-	        	engine.interpretCommand("go south");
+	        	engine.interpretCommand(new Command(CommandWord.GO,"south"));
 
 	        else if(source == help)
-	        	engine.interpretCommand("help");
+	        	engine.interpretCommand(new Command(CommandWord.HELP,""));
 
 	        else if(source == look)
-	        	engine.interpretCommand("look");
+	        	engine.interpretCommand(new Command(CommandWord.LOOK,""));
 
-	        else if(source == eat)
-	        	engine.interpretCommand("eat");
+	        else if(source == back)
+	        	engine.interpretCommand(new Command(CommandWord.BACK,""));
 
 	        else 
 	        	processCommand();
@@ -300,10 +317,10 @@ public class UserInterface implements ActionListener{
 	    private void processCommand()
 	    {
 	        //boolean finished = false;
-	        String input = entryField.getText();
+	        String line = entryField.getText();
 	        entryField.setText("");
-
-	        engine.interpretCommand(input);
+	        println(line);
+	        engine.interpretCommand(parser.getCommand(line));
 	    }
 }
 

@@ -1,7 +1,3 @@
-This directory contains the game called One Piece, it is an improved version of the "zuul-bad" project.
-
-Here is the description of Zuul-bad
-
 Project: zuul-bad
 Authors: Michael Kolling and David J. Barnes
 

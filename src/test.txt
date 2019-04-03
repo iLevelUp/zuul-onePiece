@@ -1,7 +1,0 @@
-go north
-go northWest
-go north
-look
-go northEast
-look
-help
