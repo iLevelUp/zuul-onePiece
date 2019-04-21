@@ -12,12 +12,20 @@ import java.util.HashMap;
 public class ItemList {
 	
 	private HashMap<String,Item> items;
+	private HashMap<String,Characters> characters;
 	/**
 	* Default Constructor
 	*/
 	public ItemList() {
 		this.items=new HashMap<String,Item>();
+		this.characters=new HashMap<String,Characters>();
 	}
+
+
+	public void addCharacters(String roomName,Characters character){
+		characters.put(roomName,character);
+	}
+
 	/**
 	* This function add Items to The room
 	* @param roomName the room name
@@ -80,5 +88,25 @@ public class ItemList {
 		return returnString;
 	}
 	
+	public StringBuilder getCharactersDescription(){
+		StringBuilder returnString=new StringBuilder();
+		if(characters.isEmpty()) 
+			return returnString.append(" No characters here");
+		
+		for(Characters x : characters.values()) 
+			returnString.append(" "+x.getName());
+		
+		return returnString;
+	}
+
+	public StringBuilder getHi(){
+		StringBuilder returnString=new StringBuilder();
+		if(characters.isEmpty()) 
+			return returnString.append("No characters here");
+		for(Characters x : characters.values()) 
+			returnString.append(x.getName()+":"+x.getHello());
+		return returnString;
+	}
+
 	
 }

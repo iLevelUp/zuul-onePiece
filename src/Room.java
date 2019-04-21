@@ -56,6 +56,9 @@ public class Room {
         items.addItem(roomName,item);
     }
     
+    public void addCharacters(String roomName,Characters character){
+        items.addCharacters(roomName,character);
+    }
     /**
     * remove items from this room.
     * @param itemName item Name
@@ -91,7 +94,7 @@ public class Room {
     * @return A description of the room, including exits.
     */
     public String getLongDescription(){
- 		return "You are " + description + ".\n" + getExitString() + "\n"+getItemsDescription();
+ 		return "You are " + description + ".\n" + getExitString() + "\n"+getItemsDescription() +"\n " + getCharactersDescription();
     }
     
     /**
@@ -114,6 +117,14 @@ public class Room {
     */
     public String getItemsDescription() {
 		return "Items :"+items.getItemsDescription();
+    }
+
+    public String getCharactersDescription() {
+		return "Characters :"+items.getCharactersDescription();
+    }
+
+    public String getCharactersHi(){
+        return items.getHi()+"\n";
     }
     /**
     * get image name

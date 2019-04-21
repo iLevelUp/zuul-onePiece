@@ -68,6 +68,6 @@ public class Parser
      */
     public String showCommands()
     {
-        return "Your command words are:"+commands.getCommandList();
+        return "Your command words are:\n\n"+commands.getCommandList();
     }
 }

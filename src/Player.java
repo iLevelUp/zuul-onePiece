@@ -46,6 +46,9 @@ public class Player {
 		return this.location;
 	}
 	
+	public int getTotalWeight(){
+		return bag.getTotalWeight();
+	}
 	public void addItemToBag(String name,Item item){
 		System.out.println(item.getWeight()+" "+getWeight()+" "+(getWeight()-item.getWeight()));
 		if(checkWeight(name,item)){

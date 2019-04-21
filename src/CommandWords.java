@@ -60,7 +60,7 @@ public class CommandWords
      * Print all valid commands to System.out.
      */
     public StringBuilder getCommandList() {
-    	StringBuilder returnString= new StringBuilder(" ");
+    	StringBuilder returnString= new StringBuilder();
         for(String command : validCommands.keySet()) {
            returnString.append(" "+command);
         }

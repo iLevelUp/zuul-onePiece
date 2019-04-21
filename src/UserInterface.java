@@ -12,9 +12,10 @@ public class UserInterface implements ActionListener{
 	    private JFrame myFrame;
 	    private JTextField entryField;
 	    private JTextArea log;
-	    private JLabel image;
+	    private JLabel image,solde,bag,life;
 		private JButton north,northEast,northWest,east,west,southEast,southWest,south,look,help,back,none;
-	    private Parser parser;
+		private Parser parser;
+		
 	    /**
 	     * Construct a UserInterface. As a parameter, a Game Engine
 	     * (an object processing and executing the game commands) is
@@ -120,12 +121,12 @@ public class UserInterface implements ActionListener{
 
 	        gbc.gridx=0;
 	        gbc.gridy=1;
-	        gbc.gridheight=6;
+	        gbc.gridheight=7;
 	        gbc.gridwidth=1;
 	       	panel.add(listScroller,gbc);
 	        
 	        gbc.gridx=0;
-	        gbc.gridy=7;
+	        gbc.gridy=8;
 	        gbc.gridheight=1;
 	        gbc.gridwidth=1;
 	        panel.add(entryField,gbc);
@@ -221,12 +222,31 @@ public class UserInterface implements ActionListener{
 	        southEast.addActionListener(this);
 			panel.add(southEast,gbc);
 
-			
+			bag = new JLabel("Bag 0/250KG",JLabel.LEFT);
+	       	gbc.gridx=2;
+			gbc.gridy=6;
+			gbc.gridheight=1;
+	        gbc.gridwidth=1;
+			panel.add(bag,gbc);
+
+			solde = new JLabel("Solde 50 $",JLabel.LEFT);
+	       	gbc.gridx=3;
+			gbc.gridy=6;
+			gbc.gridheight=1;
+			gbc.gridwidth=1;
+			panel.add(solde,gbc);
+
+			life = new JLabel("Life 3/3",JLabel.LEFT);
+	       	gbc.gridx=4;
+			gbc.gridy=6;
+			gbc.gridheight=1;
+	        gbc.gridwidth=1;
+			panel.add(life,gbc);
 
 			help=new JButton("Help");
 			help.setPreferredSize(new Dimension(80, 20));
 			gbc.gridx=2;
-			gbc.gridy=7;
+			gbc.gridy=8;
 		    gbc.gridheight=1;
 	        gbc.gridwidth=1;
 	        help.addActionListener(this);
@@ -236,7 +256,7 @@ public class UserInterface implements ActionListener{
 			back=new JButton("Back");
 			back.setPreferredSize(new Dimension(60, 20));
 			gbc.gridx=3;
-			gbc.gridy=7;
+			gbc.gridy=8;
 			gbc.gridheight=1;
 	        gbc.gridwidth=1;
 			back.addActionListener(this);
@@ -245,11 +265,13 @@ public class UserInterface implements ActionListener{
 			look=new JButton("Look");
 			look.setPreferredSize(new Dimension(80, 20));
 			gbc.gridx=4;
-			gbc.gridy=7;
+			gbc.gridy=8;
 			gbc.gridheight=1;
 	        gbc.gridwidth=1;
 			look.addActionListener(this);
 			panel.add(look,gbc);
+
+			
 
 	        myFrame.getContentPane().add(panel, BorderLayout.CENTER);
 
@@ -259,7 +281,6 @@ public class UserInterface implements ActionListener{
 	        });
 
 	        entryField.addActionListener(this);
-
 	        myFrame.pack();
 	        myFrame.setVisible(true);
 	        entryField.requestFocus();
@@ -308,8 +329,22 @@ public class UserInterface implements ActionListener{
 
 	        else 
 	        	processCommand();
-	    }
+		}
+		
+		public void setInformation(int x){
+			String newSolde="Solde "+Integer.toString(x)+" $";
+			solde.setText(newSolde);
+		}
 
+		public void setBagContain(int x,int y){
+			String newBagContain="Bag "+Integer.toString(x) +"/"+Integer.toString(y)+"KG";
+			bag.setText(newBagContain);
+		}
+
+		public void setLife(int x){
+			String newSolde="Solde "+Integer.toString(x)+" $";
+			solde.setText(newSolde);
+		}
 	    /**
 	     * A command has been entered. Read the command and do whatever is 
 	     * necessary to process it.
