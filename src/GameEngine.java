@@ -11,7 +11,6 @@
  */
 package src;
 
-import java.util.ArrayList;
 import java.util.Stack;
 import java.time.LocalTime;
 import java.io.*;
@@ -24,9 +23,7 @@ public class GameEngine {
     private Stack<Room> displacement;
     private Player player;
     private Room   beamerCharged;
-    public  ArrayList<Room> rooms;
-    private Room cocoyashi, nooberland, wanoKuni, water7, kalen, ortopia, alabasta, krakenland, amazoneLily, skypia,
-            paris8, rafel, pontDuJoie, elMourouj, parcB, laMarsa, sidiBouSaid;
+    private Scenario  scenario;
 
     /**
      * Create the game and initialise its internal map.
@@ -35,8 +32,8 @@ public class GameEngine {
         parser = new Parser();
         displacement = new Stack<Room>();
         player = new Player("sangoku", 250, currentRoom, 50);
-        rooms=new ArrayList<Room>();
-        createRooms();
+        scenario=new Scenario();
+        currentRoom=scenario.getStartRoom();
     }
 
     /**
@@ -56,7 +53,6 @@ public class GameEngine {
 
         do {
             LocalTime currentTime = LocalTime.now();
-            //System.out.println("Minute: " + currentTime.getMinute());
             if (currentTime.getMinute() == localTime3.getMinute()) {
                 endGame();
                 finish = 1;
@@ -76,105 +72,6 @@ public class GameEngine {
         gui.println(currentRoom.getLongDescription());
         gui.showImage(currentRoom.getImageName());
 
-    }
-
-    /**
-     * Create all the rooms and link their exits together.
-     */
-    private void createRooms() {
-
-        cocoyashi = new Room("Cocoyashi", "src/images/kokoyashi.png");
-        rooms.add(cocoyashi);
-        nooberland = new Room("Nooberland", "src/images/Nooberland.png");
-        rooms.add(nooberland);
-        wanoKuni = new Room("Wano_kuni", "src/images/wanokuni.png");
-        rooms.add(wanoKuni);
-        water7 = new Room("Water7", "src/images/Water_Seven.png");
-        rooms.add(water7);
-        kalen = new Room("Kalen", "src/images/kalen.png");
-        rooms.add(kalen);
-        ortopia = new Room("Ortopia", "src/images/Ortopia.png");
-        rooms.add(ortopia);
-        alabasta = new Room("Alabasta if you give me gold i will get to room that can help you","src/images/Alabasta.png");
-        rooms.add(alabasta);
-        krakenland = new Room("Krakenland", "src/images/Krakenland.png");
-        rooms.add(krakenland);
-        amazoneLily = new Room("Amazone_lily", "src/images/AmazonLily.png");
-        rooms.add(amazoneLily);
-        skypia = new Room("Skypia", "src/images/skypia.png");
-        rooms.add(skypia);
-        paris8 = new Room("Paris8, il semble que vous avez découvert une île absente sur votre carte, et si vous l'exploriez ?","src/images/paris8.png");
-        rooms.add(paris8);
-        rafel = new Room("Rafel, ~votre log pose n'arrête pas de s'agiter ...~", "src/images/raftel.png");
-        rooms.add(rafel);
-        pontDuJoie = new Room("Pont Du joie ce pont fondé pour un but artistique ", "src/images/pontdujoie.png");
-        rooms.add(pontDuJoie);
-        elMourouj = new Room("It's a tramways that will get you to the other side \n but you have to pay the ticket or you will lose","src/images/elmourouj.jpg");
-        rooms.add(elMourouj);
-        parcB = new Room("Parc B c'est un parc de l'Esperance Sportif De Tunis fondé en 1919", "src/images/parcb.jpg");
-        rooms.add(parcB);
-        laMarsa = new Room("La marsa c'est la plage la plus douce ", "src/images/lamarsa.jpg");
-        rooms.add(laMarsa);
-        sidiBouSaid = new Room("Sidi bou Said c'est la meilleur vue du monde ", "src/images/sidibousaid.jpg");
-        rooms.add(sidiBouSaid);
-        // initialise room exits & items
-        cocoyashi.setExits("north", nooberland);
-        cocoyashi.addItems("gold", new Item("gold", "you can sell gold to get money", 10, 10));
-        cocoyashi.addItems("silver", new Item("silver", "you can sell silver to get money", 50, 10));
-        cocoyashi.addCharacters("cocoyahi", new Characters("Dali", "Good moring i'm dali i can help you if you give me some money","Go to paris8 room you'll find a cookie eat it this make you bag bigger", new Item("gold","gold", 10,10) ));
-
-        nooberland.setExits("east", water7);
-        nooberland.setExits("south", cocoyashi);
-        nooberland.setExits("west", wanoKuni);
-        nooberland.setExits("northWest", kalen);
-        nooberland.setExits("northEast", alabasta);
-        nooberland.addItems("sakura", new Item("sakura", "this item give you power", 500, 10));
-
-        wanoKuni.setExits("east", nooberland);
-        wanoKuni.addItems("fafa", new Item("fafa", "this item give you power", 50, 10));
-        wanoKuni.addItems("apple", new Item("apple", "this item give you life ", 50, 10));
-
-        water7.setExits("west", nooberland);
-        water7.addItems("beamer", new Item("beamer", "this item can teleport you to a random room", 5, 10));
-
-        kalen.setExits("north", skypia);
-        kalen.setExits("southEast", nooberland);
-        kalen.addItems("ammo", new Item("ammo", "this item can charge your Beamer", 1, 10));
-        kalen.addItems("ammo", new Item("ammo", "this item can charge your Beamer", 1, 10));
-        kalen.addItems("ammo", new Item("ammo", "this item can charge your Beamer", 1, 10));
-        kalen.addItems("ammo", new Item("ammo", "this item can charge your Beamer", 1, 10));
-
-        ortopia.setExits("north", krakenland);
-        ortopia.setExits("west", kalen);
-        ortopia.setExits("northEast", amazoneLily);
-
-        alabasta.setExits("southWest", nooberland);
-
-        krakenland.setExits("south", ortopia);
-        krakenland.setExits("west", skypia);
-
-        amazoneLily.setExits("southWest", ortopia);
-
-        amazoneLily.setExits("northEast", laMarsa);
-
-        laMarsa.setExits("northWest", elMourouj);
-
-        parcB.setExits("northEast", rafel);
-        parcB.setExits("southWest", sidiBouSaid);
-
-        skypia.setExits("north", paris8);
-        skypia.setExits("east", krakenland);
-        skypia.setExits("south", kalen);
-        skypia.setExits("northEast", rafel);
-
-        paris8.setExits("south", skypia);
-        paris8.addItems("cookie", new Item("cookie", "This magic cookie multiply your bag weight by 2", 250, 0));
-        rafel.setExits("southWest", skypia);
-        rafel.setExits("north", pontDuJoie);
-        rafel.setExits("southEast", parcB);
-        rafel.addItems("OtropiaKey", new Item("OtropiaKey", "this is a key of a room ", 50, 10));
-
-        currentRoom = cocoyashi; // start game outside
     }
 
     /**
@@ -346,7 +243,7 @@ public class GameEngine {
     * This function allow to the player to pick up things in the room 
     * @param Command enter by the user 
     */
-    private void take(Command command) {
+    private void take(Command command){
     	if(!command.hasSecondWord()) {
     		gui.print("take What ?");
     		return;
@@ -356,6 +253,11 @@ public class GameEngine {
         	if(player.checkWeight(newItem, currentRoom.checkItemInTheRoom(newItem) )) {
         		player.addItemToBag(newItem,  currentRoom.checkItemInTheRoom(newItem));
                 currentRoom.removeItems(newItem);
+                if(newItem=="gold"){
+                    System.out.println(newItem);
+                    currentRoom.setImageName("src/images/kokoyashi2.png");
+                    gui.showImage(currentRoom.getImageName());
+                }
                 gui.setBagContain(player.getTotalWeight(),player.getWeight()+player.getTotalWeight());
 
 
@@ -413,6 +315,9 @@ public class GameEngine {
     }
 
     private void talk(){
+        currentRoom.setImageName("src/images/kokoyashi1.png");
+        gui.showImage(currentRoom.getImageName());
+
         gui.println(currentRoom.getCharactersHi());
     }
     /**
@@ -420,21 +325,30 @@ public class GameEngine {
     * other case he lose
     */
     private void pay() {
-    	if(player.getLocation()==elMourouj) {
-    		if(player.getSolde()-10>0) {
-                player.setSolde(player.getSolde()-10);
-    			gui.print("Thank you it's 10$\n");
-    			elMourouj.setExits("southEast",laMarsa);
-                elMourouj.setExits("southWest",krakenland);
-                gui.setInformation(player.getSolde());
+        //TODO
+
+        String d=(player.getLocation()).getDescription();
+        System.out.println(d);
+        String[] validRoomToPay = {"It's a tramways that will get you to the other side \n but you have to pay the ticket or you will lose",
+                        "apple"};
+        for(int i=0;i<validRoomToPay.length;i++){
+            if((player.getLocation()).getDescription()==validRoomToPay[i]){
+                if(player.getSolde()-10>0) {
+                    player.setSolde(player.getSolde()-10);
+                    gui.print("Thank you it's 10$\n");
+                    (player.getLocation()).setExitByDescription("north","La marsa c'est la plage la plus douce");
+                    gui.setInformation(player.getSolde());
+                }
             }
+        
         }
+       
     }
     /**
     * This function allow the player to open a new exits for a room
     */
     private void openRoom() {
-    	
+    	/*
     	if(player.checkItemInTheBag("OtropiaKey")!=null){
     		if(player.getLocation()!= ortopia) {
     			gui.print("You don't have keys or this key is not for this room");
@@ -443,7 +357,7 @@ public class GameEngine {
 	    		player.removeItemFromBag("OtropiaKey");
 	            kalen.setExits("east",ortopia);
     		}
-		}
+		}*/
     }
     /**
     * This function allow the user to eat things eatable of course in his bag

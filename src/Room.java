@@ -94,7 +94,7 @@ public class Room {
     * @return A description of the room, including exits.
     */
     public String getLongDescription(){
- 		return "You are " + description + ".\n" + getExitString() + "\n"+getItemsDescription() +"\n " + getCharactersDescription();
+         return "You are in " + description + ".\n->" + getExitString() + "\n->"+getItemsDescription() +"\n->" + getCharactersDescription()+"\n------------------------------------------------------------------------------------------------------\n";
     }
     
     /**
@@ -125,6 +125,13 @@ public class Room {
 
     public String getCharactersHi(){
         return items.getHi()+"\n";
+    }
+    
+    public void setExitByDescription(String direction,String Description){
+        exits.put(direction, exits.get(Description));
+    }
+    public void setImageName(String imageName){
+        this.imageName=imageName;
     }
     /**
     * get image name

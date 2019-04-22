@@ -14,8 +14,7 @@ public class UserInterface implements ActionListener{
 	    private JTextArea log;
 	    private JLabel image,solde,bag,life;
 		private JButton north,northEast,northWest,east,west,southEast,southWest,south,look,help,back,none;
-		private Parser parser;
-		
+		private Parser parser;		
 	    /**
 	     * Construct a UserInterface. As a parameter, a Game Engine
 	     * (an object processing and executing the game commands) is
