@@ -1,24 +1,23 @@
 package src;
 import java.util.StringTokenizer;
-/*
- * This class is part of "World of Zuul". "World of Zuul" is a simple, 
- * text based adventure game.
- *
- * This parser takes user input and tries to interpret it as a "Zuul"
- * command. Every time it is called it takes a line as a String and
- * tries to interpret the line as a two word command. It returns the command
- * as an object of class Command.
- *
- * The parser has a set of known command words. It checks user input against
- * the known commands, and if the input is not one of the known commands, it
- * returns a command object that is marked as an unknown command.
- * 
- * @author  Michael Kolling and David J. Barnes
- * @version 2.0 (Jan 2003)
- */
+/** 
+* This class is part of "World of Zuul". "World of Zuul" is a simple, 
+* text based adventure game.
+*
+* This parser takes user input and tries to interpret it as a "Zuul"
+* command. Every time it is called it takes a line as a String and
+* tries to interpret the line as a two word command. It returns the command
+* as an object of class Command.
+*
+* The parser has a set of known command words. It checks user input against
+* the known commands, and if the input is not one of the known commands, it
+* returns a command object that is marked as an unknown command.
+* 
+* @author  Michael Kolling and David J. Barnes
+* @version 2.0 (Jan 2003)
+*/
 
-public class Parser 
-{
+public class Parser {
 
     private CommandWords commands;  // holds all valid command words
     //private Scanner     reader;

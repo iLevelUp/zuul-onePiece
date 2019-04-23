@@ -1,6 +1,12 @@
 package src;
 
-
+/**
+* This class contains player in the game the player have a crew to help him to find key and
+* affront enemies the player have a boat to carry stuff found in the area the purpose of the player 
+* is to find one piece legend that's allows him to win the game he can also buy thing
+* @author Ghouibi Ghassen
+* @version 3.0 (April 2019) 
+*/
 public class Player {
 	
 	private String 						name;
@@ -8,12 +14,19 @@ public class Player {
 	private Room   						location;
 	private ItemList					bag;
 	private int 						solde;
+	private int 						crew;
+	private int 						magicKeys;
+	private int 						strength;
 	
-	public Player(String name,int weight,Room actualRoom,int solde){
+	//Constuctor
+	public Player(String name,int weight,Room actualRoom,int solde,int crew,int magicKeys,int strength){
 		this.name=name;
 		this.solde=solde;
 		this.bagWeight=weight;
 		this.location=actualRoom;
+		this.crew=crew;
+		this.magicKeys=magicKeys;
+		this.strength=strength;
 		bag=new ItemList();
 	}
 	
@@ -49,21 +62,23 @@ public class Player {
 	public int getTotalWeight(){
 		return bag.getTotalWeight();
 	}
-	public void addItemToBag(String name,Item item){
-		System.out.println(item.getWeight()+" "+getWeight()+" "+(getWeight()-item.getWeight()));
+
+	public void addItemToBag(Player name,Item item){
 		if(checkWeight(name,item)){
-			setWeight(getWeight()-item.getWeight());
-			bag.addItem(name,item);
+			name.setWeight(name.getWeight()-item.getWeight());
+			bag.addItem(item.getName(),item);
 		}else {
 			System.out.println("You can't It's too heavy");
 		}
 	}
-	public boolean checkWeight(String name,Item item) {
-		if(getWeight()-item.getWeight()>=0) {
+
+	public boolean checkWeight(Player name,Item item) {
+		if(name.getWeight()-item.getWeight()>=0) {
 			return true;
 		}
 		return false;
 	}
+
 	public void removeItemFromBag(String name){
 		setWeight(getWeight()+bag.getItemWeight(name));
 		bag.removeItem(name);
@@ -71,8 +86,29 @@ public class Player {
 	
 	public Item checkItemInTheBag(String name) {
     	return bag.checkItemInList(name);
-  }
+  	}
 	
+	public int getCrewNumber(){
+		return this.crew;
+	}
+
+	public void setCrewNumber(int number){
+		this.crew=number;
+	}
+
+	public int getMagicKeys(){
+		return this.magicKeys;
+	}
+	public void setMagicKeys(int number){
+		this.magicKeys=number;
+	}
+
+	public int getStrength(){
+		return this.strength;
+	}
+	public void setStrength(int strength){
+		this.strength=strength;
+	}
 	public String showMyBag() {
 		return "Your bag contain :" +bag.getItemsDescription()+" Totalise "+ bag.getTotalWeight()+"/"+getWeight()+" Kg";
   }

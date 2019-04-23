@@ -1,14 +1,14 @@
 /**
- *  This class is part of the "World of Zuul" application. 
- *  "World of Zuul" is a very simple, text based adventure game.
- * 
- *  This class creates all rooms, creates the parser and starts
- *  the game.  It also evaluates and executes the commands that 
- *  the parser returns.
- * 
- * @author  Michael Kolling and David J. Barnes
- * @version 1.0 (Jan 2003)
- */
+*  This class is part of the "World of Zuul" application. 
+*  "World of Zuul" is a very simple, text based adventure game.
+* 
+*  This class creates all rooms, creates the parser and starts
+*  the game.  It also evaluates and executes the commands that 
+*  the parser returns.
+* 
+* @author  Michael Kolling and David J. Barnes
+* @version 1.0 (Jan 2003)
+*/
 package src;
 
 import java.util.Stack;
@@ -31,7 +31,7 @@ public class GameEngine {
     public GameEngine() {
         parser = new Parser();
         displacement = new Stack<Room>();
-        player = new Player("sangoku", 250, currentRoom, 50);
+        player = new Player("sangoku", 250, currentRoom, 50,50,0,30);
         scenario=new Scenario();
         currentRoom=scenario.getStartRoom();
     }
@@ -50,12 +50,23 @@ public class GameEngine {
         // Maybe giving some extra time
         LocalTime time = LocalTime.now();
         LocalTime localTime3 = time.plusMinutes(10);
+        LocalTime  breakfeastTime= time.plusMinutes(1);
 
         do {
             LocalTime currentTime = LocalTime.now();
             if (currentTime.getMinute() == localTime3.getMinute()) {
                 endGame();
                 finish = 1;
+            }
+            if(currentTime.getMinute()== breakfeastTime.getMinute() ){
+                player.setStrength(player.getStrength()-10);
+                gui.setStrength(player.getStrength());
+                breakfeastTime=currentTime.plusMinutes(1);
+            }
+           
+            if(player.getStrength()<=0){
+                endGame();
+                finish =1;
             }
         } while (finish != 1);
     }
@@ -100,7 +111,7 @@ public class GameEngine {
             break;
         case TEST:
             testFile(commandLine);
-        		break;
+            break;
         case TAKE:
             take(commandLine);
             break;
@@ -116,6 +127,9 @@ public class GameEngine {
         case OPEN:
             openRoom();
             break;
+        case HIRE:
+            hire();
+            break;
         case CHARGE:
             charge();
             break;
@@ -125,7 +139,11 @@ public class GameEngine {
         case TALK:
             talk();
             break;
+        case ATTACK:
+            attack(commandLine);
+            break;
         case GIVE:
+            give(commandLine);
             break;
         case QUIT:
             if(commandLine.hasSecondWord())
@@ -138,6 +156,25 @@ public class GameEngine {
             break;
         }
         
+    }
+
+    private void attack(Command command){
+        
+        if(!command.hasSecondWord()) {
+    		gui.print("attack Who ?");
+    		return;
+    	}
+        String name=command.getSecondWord();
+        
+        if((currentRoom.checkEnemiesInTheRoom(name)).getStrength()<player.getStrength()){
+            currentRoom.removeEnemy(currentRoom.checkEnemiesInTheRoom(name).getName());
+            gui.println("Enemy killed");
+        }
+        else{
+            player.setCrewNumber(player.getCrewNumber()-10);
+            gui.setCrew(player.getCrewNumber());
+            gui.println("Enemy kill some of your crew\n");
+        }
     }
     /**
     * Get you back to the room just before 
@@ -250,16 +287,22 @@ public class GameEngine {
     	}
         String newItem=command.getSecondWord();
         if(currentRoom.checkItemInTheRoom(newItem)!=null){
-        	if(player.checkWeight(newItem, currentRoom.checkItemInTheRoom(newItem) )) {
-        		player.addItemToBag(newItem,  currentRoom.checkItemInTheRoom(newItem));
-                currentRoom.removeItems(newItem);
-                if(newItem=="gold"){
-                    System.out.println(newItem);
-                    currentRoom.setImageName("src/images/kokoyashi2.png");
-                    gui.showImage(currentRoom.getImageName());
+        	if(player.checkWeight(player, currentRoom.checkItemInTheRoom(newItem))){
+                if(currentRoom.checkItemInTheRoom(newItem).getName()=="money"){
+                    player.setSolde(currentRoom.checkItemInTheRoom(newItem).getPrice()+player.getSolde());
+                    gui.setSolde(player.getSolde());
                 }
-                gui.setBagContain(player.getTotalWeight(),player.getWeight()+player.getTotalWeight());
-
+                else if(currentRoom.checkItemInTheRoom(newItem).getName()=="magicKey"){
+                    player.setMagicKeys(player.getMagicKeys()+1);
+                    gui.setKeys(player.getMagicKeys());
+                    currentRoom.removeItems(newItem);
+                }
+                else{
+        		    player.addItemToBag(player, currentRoom.checkItemInTheRoom(newItem));
+                    //player.setWeight(player.getWeight()+currentRoom.checkItemInTheRoom(newItem).getWeight());
+                    currentRoom.removeItems(newItem);
+                    gui.setBagContain(player.getTotalWeight(),player.getWeight()+player.getTotalWeight());
+                }
 
         	}else {
                 gui.print("You cannot pick up this item it's too heavy");
@@ -291,6 +334,22 @@ public class GameEngine {
         }
 
     }
+
+    private void give(Command command){
+        if(!command.hasSecondWord()){
+            gui.print("Give What ?");
+            return;
+        }
+        String givenItem=command.getSecondWord();
+        if(player.checkItemInTheBag(givenItem)!=null){
+            gui.print(currentRoom.giveCharactersItem(player.checkItemInTheBag(givenItem)));
+            player.removeItemFromBag(givenItem);
+            gui.setBagContain(player.getTotalWeight(),player.getWeight()+player.getTotalWeight());
+        }
+        else{
+            gui.print("You don't have this item in your bag !");
+        }
+    }
     /**
     * Print goodbye and enable the entry field
     */
@@ -314,10 +373,23 @@ public class GameEngine {
         gui.print("\n");
     }
 
+    private void hire(){
+        if((player.getSolde()-10)>0 ){
+            player.setSolde(player.getSolde()-10);
+            gui.setSolde(player.getSolde());
+            player.setCrewNumber(player.getCrewNumber()+10);
+            gui.setCrew(player.getCrewNumber());
+            player.setStrength(player.getStrength()+5);
+            gui.setStrength(player.getStrength());
+            gui.print("Hiring new persons in da crew\n");
+        }
+        else{
+            gui.print("You don't have enough money\n");
+        }
+    }
     private void talk(){
         currentRoom.setImageName("src/images/kokoyashi1.png");
         gui.showImage(currentRoom.getImageName());
-
         gui.println(currentRoom.getCharactersHi());
     }
     /**
@@ -325,39 +397,29 @@ public class GameEngine {
     * other case he lose
     */
     private void pay() {
-        //TODO
-
-        String d=(player.getLocation()).getDescription();
-        System.out.println(d);
-        String[] validRoomToPay = {"It's a tramways that will get you to the other side \n but you have to pay the ticket or you will lose",
-                        "apple"};
-        for(int i=0;i<validRoomToPay.length;i++){
-            if((player.getLocation()).getDescription()==validRoomToPay[i]){
-                if(player.getSolde()-10>0) {
-                    player.setSolde(player.getSolde()-10);
-                    gui.print("Thank you it's 10$\n");
-                    (player.getLocation()).setExitByDescription("north","La marsa c'est la plage la plus douce");
-                    gui.setInformation(player.getSolde());
-                }
+        if(player.getLocation()==scenario.getRoomByName("elMourouj")){
+            if(player.getSolde()-10>=0){
+                player.setSolde(player.getSolde()-10);
+                gui.setSolde(player.getSolde());
+                gui.println("Thank you see you soon");
+                scenario.getRoomByName("elMourouj").setExits("southEast", scenario.getRoomByName("laMarsa"));
+            }else{
+                gui.println("You don't have enough money sorry");
+                endGame();
             }
-        
         }
-       
     }
     /**
     * This function allow the player to open a new exits for a room
     */
-    private void openRoom() {
-    	/*
-    	if(player.checkItemInTheBag("OtropiaKey")!=null){
-    		if(player.getLocation()!= ortopia) {
-    			gui.print("You don't have keys or this key is not for this room");
-    		}
-    		else {
-	    		player.removeItemFromBag("OtropiaKey");
-	            kalen.setExits("east",ortopia);
-    		}
-		}*/
+    private void openRoom(){
+        if(player.getLocation()==scenario.getRoomByName("pontDuJoie")){
+            if(player.getMagicKeys()==4){
+                scenario.getRoomByName("pontDuJoie").setExits("east",scenario.getWinRoom());
+            }else{
+                gui.println("You must have 4 key before \n");
+            }
+        }
     }
     /**
     * This function allow the user to eat things eatable of course in his bag
@@ -373,10 +435,22 @@ public class GameEngine {
         for(int i=0;i<validItemToEat.length;i++){
             if(eatItem.equals(validItemToEat[i])){
             	if(player.checkItemInTheBag(eatItem)!=null){
-            		player.removeItemFromBag(eatItem);
-                    player.setWeight((player.getWeight()*2));	
-                    gui.println("You had eaten a "+eatItem);
-                    gui.setBagContain(player.getTotalWeight(),player.getWeight()+player.getTotalWeight());
+                    if(player.checkItemInTheBag(eatItem).getName()=="cookie"){
+                        gui.println("You eaten a "+eatItem);
+                        player.setStrength(player.getStrength()+(player.checkItemInTheBag("cookie")).getPrice());
+                        gui.setStrength(player.getStrength()+(player.checkItemInTheBag("cookie")).getPrice());
+                        player.removeItemFromBag(eatItem);
+                        player.setWeight((player.getWeight()*2));	
+                        gui.setBagContain(player.getTotalWeight(),player.getWeight());
+                    }
+                    else{
+                        gui.println("You had eaten a "+eatItem);
+                        player.setStrength(player.getStrength()+(player.checkItemInTheBag(eatItem)).getPrice());
+                        gui.setStrength(player.getStrength());
+                        player.removeItemFromBag(eatItem);
+                        gui.setBagContain(player.getTotalWeight(),player.getWeight()+player.getTotalWeight());
+                    }
+            		
                 }
             	else {
             		gui.print("Item does'nt exist in you bag");

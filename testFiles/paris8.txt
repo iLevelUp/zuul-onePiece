@@ -6,7 +6,3 @@ go north
 drop gold
 take cookie
 eat cookie
-go south
-go south
-go southEast
-take sakura

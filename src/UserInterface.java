@@ -12,7 +12,7 @@ public class UserInterface implements ActionListener{
 	    private JFrame myFrame;
 	    private JTextField entryField;
 	    private JTextArea log;
-	    private JLabel image,solde,bag,life;
+	    private JLabel image,solde,bag,life,keys,strength,crew;
 		private JButton north,northEast,northWest,east,west,southEast,southWest,south,look,help,back,none;
 		private Parser parser;		
 	    /**
@@ -242,6 +242,27 @@ public class UserInterface implements ActionListener{
 	        gbc.gridwidth=1;
 			panel.add(life,gbc);
 
+			strength=new JLabel("Strength 30%",JLabel.LEFT);
+			gbc.gridx=2;
+			gbc.gridy=7;
+			gbc.gridheight=1;
+	        gbc.gridwidth=1;
+			panel.add(strength,gbc);
+
+			crew = new JLabel("Crew 50 person",JLabel.LEFT);
+	       	gbc.gridx=3;
+			gbc.gridy=7;
+			gbc.gridheight=1;
+			gbc.gridwidth=1;
+			panel.add(crew,gbc);
+
+			keys = new JLabel("MagicKeys 0/4",JLabel.LEFT);
+	       	gbc.gridx=4;
+			gbc.gridy=7;
+			gbc.gridheight=1;
+	        gbc.gridwidth=1;
+			panel.add(keys,gbc);
+
 			help=new JButton("Help");
 			help.setPreferredSize(new Dimension(80, 20));
 			gbc.gridx=2;
@@ -330,7 +351,7 @@ public class UserInterface implements ActionListener{
 	        	processCommand();
 		}
 		
-		public void setInformation(int x){
+		public void setSolde(int x){
 			String newSolde="Solde "+Integer.toString(x)+" $";
 			solde.setText(newSolde);
 		}
@@ -341,9 +362,24 @@ public class UserInterface implements ActionListener{
 		}
 
 		public void setLife(int x){
-			String newSolde="Solde "+Integer.toString(x)+" $";
+			String newSolde="Life "+Integer.toString(x)+"/3";
 			solde.setText(newSolde);
 		}
+
+		public void setCrew(int x){
+			String newCrew="Crew "+Integer.toString(x)+" Person";
+			crew.setText(newCrew);
+		}
+
+		public void setStrength(int x){
+			String newStrength="Strength "+Integer.toString(x)+ "%";
+			strength.setText(newStrength);
+		}
+
+		public void setKeys(int x ){
+			String newKeys="Keys "+Integer.toString(x)+"/4";
+			keys.setText(newKeys);
+		}	
 	    /**
 	     * A command has been entered. Read the command and do whatever is 
 	     * necessary to process it.

@@ -1,12 +1,12 @@
 package src;
-/*
- * This class is part of "World of Zuul". "World of Zuul" is a simple, 
- * adventure game.
- * This Item take a description,weight and a price which can help
- * you during the game
- * @author  Ghouibi Ghassen
- * @version 2.0 (March 2019)
- */
+/**
+* This class is part of "World of Zuul". "World of Zuul" is a simple, 
+* adventure game.
+* This Item take a description,weight and a price which can help
+* you during the game
+* @author  Ghouibi Ghassen
+* @version 2.0 (March 2019)
+*/
 public class Item {
 	
 	//hold the Item 
