@@ -73,6 +73,13 @@ public class ItemList {
 			return null;
 		return enemies.get(name);
 	}
+
+	public Characters checkCharatersInTheRoom(String name){
+		if(characters.get(name)==null){
+			return null;
+		}
+		return characters.get(name);
+	}
 	/**
 	* This function get the item weight
 	* @return number 

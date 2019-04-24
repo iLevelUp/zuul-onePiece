@@ -7,8 +7,8 @@ public class TransporterRoom extends Room{
 	* @param description String description of this room.
 	* @param scenario The Scenario that's used in the Game class.
 	*/
-	public TransporterRoom(String description,String image){
-		super(description,image);
+	public TransporterRoom(String name,String description,String image){
+		super(name,description,image);
 		
 	}
 	

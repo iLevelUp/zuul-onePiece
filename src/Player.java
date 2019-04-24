@@ -17,9 +17,10 @@ public class Player {
 	private int 						crew;
 	private int 						magicKeys;
 	private int 						strength;
+	private int 						life;
 	
 	//Constuctor
-	public Player(String name,int weight,Room actualRoom,int solde,int crew,int magicKeys,int strength){
+	public Player(String name,int weight,Room actualRoom,int solde,int crew,int magicKeys,int strength,int life){
 		this.name=name;
 		this.solde=solde;
 		this.bagWeight=weight;
@@ -27,6 +28,7 @@ public class Player {
 		this.crew=crew;
 		this.magicKeys=magicKeys;
 		this.strength=strength;
+		this.life=life;
 		bag=new ItemList();
 	}
 	
@@ -106,9 +108,19 @@ public class Player {
 	public int getStrength(){
 		return this.strength;
 	}
+	
 	public void setStrength(int strength){
 		this.strength=strength;
 	}
+
+	public int getLife(){
+		return this.life;
+	}
+
+	public void setLife(int life){
+		this.life=life;
+	}
+
 	public String showMyBag() {
 		return "Your bag contain :" +bag.getItemsDescription()+" Totalise "+ bag.getTotalWeight()+"/"+getWeight()+" Kg";
   }

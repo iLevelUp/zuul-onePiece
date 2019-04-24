@@ -19,6 +19,7 @@ import java.util.HashMap;
 
 public class Room {
 
+    private String name;
     private String description;
     private HashMap<String, Room> exits;
     private String imageName;
@@ -30,11 +31,16 @@ public class Room {
     * "an open court yard".
     * @param description The room's description.
     */
-    public Room(String description,String image){
+    public Room(String name,String description,String image){
+        this.name=name;
         this.description = description;
         exits = new HashMap<String,Room>();
         imageName=image;
         items = new ItemList();
+    }
+
+    public String getName(){
+        return this.name;
     }
 
     /**
@@ -122,6 +128,10 @@ public class Room {
 
     public Enemy checkEnemiesInTheRoom(String name){
         return items.checkEnemiesInTheRoom(name);
+    }
+    
+    public Characters checkCharatersInTheRoom(String nameRoom){
+        return items.checkCharatersInTheRoom(nameRoom);
     }
     /**
     * This function allows to get all items description from ItemList 

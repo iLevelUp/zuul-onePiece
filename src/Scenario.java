@@ -10,94 +10,153 @@ public class Scenario{
 
     public Scenario(){
         this.rooms=new HashMap<String,Room>();
-        Room cocoyashi, nooberland, wanoKuni, water7, kalen, ortopia, alabasta, krakenland, amazoneLily, skypia,paris8, rafel, pontDuJoie, elMourouj, parcB, laMarsa, sidiBouSaid,theJackPot;
+        Room cocoyashi, nooberland, wanoKuni, water7, kalen, ortopia, alabasta, krakenland, amazoneLily, skypia,paris8, rafel, pontDuJoie, elMourouj, parcB, laMarsa, sidiBouSaid,theJackPot,fedayn,tatami,darka,tonyMontana,yokoshima,pnl,philadelphia,tosoma;
         
         TransporterRoom sakura;
-        sakura =new TransporterRoom("Transporter room in this room you can be tranported to a random room", "src/images/teleport.gif");
+        sakura =new TransporterRoom("Transporter","Transporter room in this room you can be tranported to a random room", "src/images/teleport.gif");
         
-        cocoyashi = new Room("Cocoyashi", "src/images/kokoyashi.png");
-        nooberland = new Room("Nooberland", "src/images/Nooberland.png");
-        wanoKuni = new Room("Wano_kuni", "src/images/wanokuni.png");
-        water7 = new Room("Water7", "src/images/Water_Seven.png");
-        kalen = new Room("Kalen", "src/images/kalen.png");
-        ortopia = new Room("Ortopia", "src/images/Ortopia.png");
-        alabasta = new Room("Alabasta if you give me gold i will get to room that can help you","src/images/Alabasta.png");
-        krakenland = new Room("Krakenland", "src/images/Krakenland.png");
-        amazoneLily = new Room("Amazone_lily", "src/images/AmazonLily.png");
-        skypia = new Room("Skypia", "src/images/skypia.png");
-        paris8 = new Room("Paris8, il semble que vous avez découvert une île absente sur votre carte, et si vous l'exploriez ?","src/images/paris8.png");
-        rafel = new Room("Rafel, ~votre log pose n'arrête pas de s'agiter ...~", "src/images/raftel.png");
-        pontDuJoie = new Room("Pont Du joie there a locked room over here ", "src/images/pontdujoie.png");
-        elMourouj = new Room("It's a tramways that will get you to the other side \n but you have to pay the ticket or you will lose","src/images/elmourouj.jpg");
-        parcB = new Room("Parc B c'est un parc de l'Esperance Sportif De Tunis fondé en 1919", "src/images/parcb.jpg");
-        laMarsa = new Room("La marsa c'est la plage la plus douce ", "src/images/lamarsa.jpg");
-        sidiBouSaid = new Room("Sidi bou Said c'est la meilleur vue du monde ", "src/images/sidibousaid.jpg");
-        theJackPot=new Room("","src/images/win.png");
+        cocoyashi = new Room("Cocoyashi","", "src/images/kokoyashi.png");
+        nooberland = new Room("Nooberland","", "src/images/Nooberland.png");
+        wanoKuni = new Room("Wanokuni","" ,"src/images/wanokuni.png");
+        water7 = new Room("Water7","", "src/images/Water_Seven.png");
+        kalen = new Room("Kalen", "","src/images/kalen.png");
+        ortopia = new Room("Ortopia","", "src/images/Ortopia.png");
+        alabasta = new Room("Alabasta if you give me gold i will get to room that can help you","","src/images/Alabasta.png");
+        krakenland = new Room("Krakenland","", "src/images/Krakenland.png");
+        amazoneLily = new Room("Amazone_lily","", "src/images/AmazonLily.png");
+        skypia = new Room("Skypia","", "src/images/skypia.png");
+        paris8 = new Room("Paris8","","src/images/paris8.png");
+        rafel = new Room("Rafel","", "src/images/raftel.png");
+        pontDuJoie = new Room("Pont Du joie there a locked room over here ","", "src/images/pontdujoie.png");
+        elMourouj = new Room("El Mourouj","","src/images/elmourouj.jpg");
+        parcB = new Room("Parc B c'est un parc de l'Esperance Sportif De Tunis fondé en 1919","", "src/images/parcb.jpg");
+        laMarsa = new Room("La marsa c'est la plage la plus douce ", "","src/images/lamarsa.jpg");
+        sidiBouSaid = new Room("Sidi bou Said c'est la meilleur vue du monde ","", "src/images/sidibousaid.jpg");
+        theJackPot=new Room("","","src/images/monster.gif");
+        fedayn =new Room("fedayn room ","","src/images/fedayn.jpg");
+        tatami =new Room("tatami room","","src/images/tatami.jpg");
+        darka =new Room("darka room ","","src/images/darka.jpg");
+        tonyMontana =new Room("tony Montana room","","src/images/tonyMontana.jpg");
+        yokoshima =new Room("yokoshima room","","src/images/yokoshima.png");
+        pnl =new Room("pnl room","","src/images/pnl.jpg");
+        philadelphia=new Room("philadelphia room","","src/images/philadelphia.jpg");
+        tosoma=new Room("tosoma room","","src/images/tosoma.jpg");
 
         // initialise room exits & items
         cocoyashi.setExits("north", nooberland);
-        cocoyashi.addItems("gold", new Item("gold", "you can sell gold to get money", 10, 10));
         cocoyashi.addItems("silver", new Item("silver", "you can sell silver to get money", 50, 10));
-        cocoyashi.addCharacters("cocoyahi-1", new Characters("Dali", "I can help you if you give me some money","Go to paris8 room you'll find a cookie eat it this make you bag bigger", new Item("gold", "you can sell gold to get money", 10, 10) ));
-        cocoyashi.addEnemies("dalton", new Enemy("dalton","Hi if you won i'll give you and item ","let's fight",new Item("gold", "you can sell gold to get money", 10, 10), 50));
-        cocoyashi.addCharacters("cocoyahi-2", new Characters("Sankou7", "I can help you if you give me gold","you find a sakura tree this can help you to grow you're crew", new Item("gold", "you can sell gold to get money", 10, 10)));
-        cocoyashi.addItems("magicKey",new Item("magicKey", "One of the magic key", 0, 0));
+        cocoyashi.addCharacters("cocoyashi", new Characters("Dali", "I can help you if you give me some gold","Go north -> west -> west \nyou'll find a transporter room that take you to a random room", new Item("gold", "you can sell gold to get money", 10, 10) ));
+        //cocoyashi.addEnemies("dalton", new Enemy("dalton","Hi if you won i'll give you and item ","let's fight",new Item("gold", "you can sell gold to get money", 10, 10), 50));
+        //cocoyashi.addItems("magicKey",new Item("magicKey", "One of the magic key", 0, 0));
 
         nooberland.setExits("east", water7);
         nooberland.setExits("south", cocoyashi);
         nooberland.setExits("west", wanoKuni);
         nooberland.setExits("northWest", kalen);
         nooberland.setExits("northEast", alabasta);
-        nooberland.addItems("sakura", new Item("sakura", "this item give you power", 500, 10));
-        nooberland.addItems("magicKey",new Item("magicKey", "One of the magic key", 0, 0));
+        nooberland.addItems("gold", new Item("gold", "you can sell gold to get money", 10, 10));
+        nooberland.addItems("apple", new Item("apple", "you ", 50, 10));
 
         wanoKuni.setExits("east", nooberland);
+        wanoKuni.addCharacters("wanoKuni", new Characters("Jêrome", "Hello i can if give me some money","Go east-> northWest -> north ->north \n you'll find a magic cookie", new Item("money","money ", 5, 15) ));
         wanoKuni.addItems("fafa", new Item("fafa", "this item give you power", 50, 10));
-        wanoKuni.addItems("apple", new Item("apple", "this item give you life ", 50, 10));
-        wanoKuni.addItems("magicKey",new Item("magicKey", "One of the magic key", 0, 0));
+        wanoKuni.addItems("money", new Item("money", "this is money ", 50, 20));
 
         water7.setExits("west", nooberland);
         water7.setExits("east", sakura);
         water7.addItems("beamer", new Item("beamer", "this item can teleport you to a random room", 5, 10));
-        water7.addItems("magicKey",new Item("magicKey", "One of the magic key", 0, 0));
+        water7.addEnemies("Dalton2", new Enemy("Dalton2","try to kill me","i'll kill you",new Item("apple","apple for life",20, 2),40));
 
         kalen.setExits("north", skypia);
         kalen.setExits("southEast", nooberland);
         kalen.addItems("ammo", new Item("ammo", "this item can charge your Beamer", 1, 10));
+        kalen.addEnemies("Dalton5",new Enemy("Dalton5", "Dalton5","i'll kill you ",new Item("sakura","sakura flavour",40,10),20));
 
         ortopia.setExits("north", krakenland);
         ortopia.setExits("west", kalen);
         ortopia.setExits("northEast", amazoneLily);
-        ortopia.addItems("money",new Item("money","money",1,500));
+        ortopia.addItems("magicKey",new Item("magicKey","magicKey",0,0));
         
         alabasta.setExits("southWest", nooberland);
+        alabasta.setExits("east",fedayn);
+        alabasta.addCharacters("alabsa",new Characters("mehdy", "hi give me sakura flavour i'll help you", "Go west-> southWest-> west \nyou'll find money",new Item("sakura","sakura flavour",40,10)));
 
         krakenland.setExits("south", ortopia);
         krakenland.setExits("west", skypia);
+        krakenland.addItems("watermelon",new Item("watermelon", "fruit is good",15, 20));
 
         amazoneLily.setExits("southWest", ortopia);
-
         amazoneLily.setExits("northEast", laMarsa);
+        amazoneLily.addCharacters("amazoneLily",new  Characters("sarfati","give me fafa i'll help you","watch out don't go northEast",new Item("fafa","this item give you power",50,10)));
+        amazoneLily.addEnemies("Dalton1",new Enemy("Dalton1","Dalton1","i'lll kill you",new Item("silver","you can sell silver",50,15),40));
 
         laMarsa.setExits("northWest", elMourouj);
+        laMarsa.addItems("money", new Item("money","money",0,50));
 
-        parcB.setExits("northEast", rafel);
-        parcB.setExits("southWest", sidiBouSaid);
+        parcB.setExits("northWest", rafel);
+        parcB.setExits("southEast", sidiBouSaid);
+        parcB.addItems("magicKey",new Item("magicKey","magicKey",0,0));
 
         skypia.setExits("north", paris8);
         skypia.setExits("east", krakenland);
         skypia.setExits("south", kalen);
         skypia.setExits("northEast", rafel);
+        skypia.addCharacters("safaran",new  Characters("safaran","give me fafa i'll help you","watch out don't go northEast enemy power is 80%",new Item("fafa","this item give you power",50,10)));
 
         paris8.setExits("south", skypia);
         paris8.addItems("cookie", new Item("cookie", "This magic cookie multiply your bag weight by 2", 250, 5));
-        
+        paris8.addItems("orange", new Item("orange","Fruit is cool",30,10));
+
         rafel.setExits("southWest", skypia);
         rafel.setExits("north", pontDuJoie);
         rafel.setExits("southEast", parcB);
         rafel.addItems("OtropiaKey", new Item("OtropiaKey", "this is a key of a room ", 50, 10));
-        
+        rafel.addEnemies("Dalton6",new Enemy("Dalton6","Dalton6","i'll kill you", new Item("gold","you can sell gold",50,35), 80));
 
+        pontDuJoie.setExits("south", rafel);
+        pontDuJoie.addCharacters("pontDuJoie",new Characters("Tabargi", "hi i can help if you give me 50$","enemies force is 100%", new Item("money","money",0,50)));
+
+        theJackPot.addEnemies("Dalton7",new Enemy("Dalton7","Dalton7","i'll kill you", new Item("OnePiece","wining",0,0),100));
+
+        sidiBouSaid.setExits("south", fedayn);
+        sidiBouSaid.addItems("kiwi", new Item("kiwi","fruit is good",55,20));
+
+        fedayn.setExits("northEast",tatami);
+        fedayn.setExits("southEast",philadelphia);
+        fedayn.addItems("avocat", new Item("avocat","fruit is good",40,25));
+        
+        sakura.addItems("sakura",new Item("sakura","this is sakura flavour",15,20));
+
+        tatami.setExits("north",darka);
+        tatami.setExits("northEast",tonyMontana);
+        tatami.setExits("east",yokoshima);
+        tatami.setExits("west",sidiBouSaid);
+        tatami.setExits("northWest",laMarsa);
+        tatami.addItems("gold",  new Item("gold", "perious gold", 40,40));
+        tatami.addItems("banana",  new Item("banana", "fruit is good", 40,10));
+        
+        yokoshima.setExits("west", tatami);
+        yokoshima.addItems("yokoshima",new Item("amande", "amande for force", 50,40));
+        yokoshima.addEnemies("Dalton3",new Enemy("Dalton3", "Hey you !","i'll kill you", new Item("banana", "fruit is good", 40, 20), 60));
+
+        tonyMontana.setExits("southWest", tatami);
+        tonyMontana.addCharacters("tonyMontata", new Characters("Paolo","sell me some gold i'll help you ", "Go southEast -> north", new Item("gold", "perious gold", 40,40) ) );
+
+        darka.setExits("south",tatami);
+        darka.addItems("magicKey",new Item("magicKey","magicKey",0,0));
+        darka.addItems("kiwi", new Item("kiwi","fruit is good",15,5));
+
+        philadelphia.setExits("east",pnl);
+        philadelphia.setExits("south",tosoma);
+        philadelphia.addEnemies("Dalton4",new Enemy("Dalton4", "Hey you !","i'll kill you", new Item("banana", "fruit is good", 40, 20), 60));
+        
+        tosoma.setExits("north", philadelphia);
+        tosoma.addItems("kiwi", new Item("kiwi","fruit is good",35,25));
+
+        pnl.setExits("west",philadelphia);
+        pnl.setExits("northWest", amazoneLily);
+        pnl.addItems("magicKey",new Item("magicKey","magicKey",0,0));
+        pnl.addItems("money",new Item("money","money $$$$$", 0, 1000));
         
         rooms.put("cocoyashi",cocoyashi);
         rooms.put("nooberland",nooberland);
@@ -116,6 +175,15 @@ public class Scenario{
         rooms.put("parcB",parcB);
         rooms.put("laMarsa",laMarsa);
         rooms.put("sidiBouSaid",sidiBouSaid);
+        rooms.put("fedayn",fedayn);
+        rooms.put("tatami",tatami);
+        rooms.put("darka",darka);
+        rooms.put("tonyMontana",tonyMontana);
+        rooms.put("philadelphia",philadelphia);
+        rooms.put("pnl",pnl);
+        rooms.put("yokoshima",yokoshima);
+        rooms.put("tosoma",tosoma);
+        
         startRoom = cocoyashi;
         winRoom=theJackPot;
     }

@@ -22,4 +22,5 @@ public class Enemy extends Characters{
     public void setStrength(int strength){
         this.strength=strength;
     }
+
 }

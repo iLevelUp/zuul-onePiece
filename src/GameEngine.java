@@ -31,7 +31,7 @@ public class GameEngine {
     public GameEngine() {
         parser = new Parser();
         displacement = new Stack<Room>();
-        player = new Player("sangoku", 250, currentRoom, 50,50,0,30);
+        player = new Player("sangoku", 250, currentRoom, 50,50,0,30,3);
         scenario=new Scenario();
         currentRoom=scenario.getStartRoom();
     }
@@ -63,10 +63,14 @@ public class GameEngine {
                 gui.setStrength(player.getStrength());
                 breakfeastTime=currentTime.plusMinutes(1);
             }
-           
-            if(player.getStrength()<=0){
+            
+            if(player.getStrength()<=0 || player.getLife()==0){
                 endGame();
                 finish =1;
+            }
+            if(player.checkItemInTheBag("OnePiece")!=null){
+                winGame();
+                finish=1;
             }
         } while (finish != 1);
     }
@@ -167,13 +171,20 @@ public class GameEngine {
         String name=command.getSecondWord();
         
         if((currentRoom.checkEnemiesInTheRoom(name)).getStrength()<player.getStrength()){
+            currentRoom.addItems(currentRoom.checkEnemiesInTheRoom(name).getItem().getName(),currentRoom.checkEnemiesInTheRoom(name).getItem());
             currentRoom.removeEnemy(currentRoom.checkEnemiesInTheRoom(name).getName());
             gui.println("Enemy killed");
         }
         else{
-            player.setCrewNumber(player.getCrewNumber()-10);
-            gui.setCrew(player.getCrewNumber());
-            gui.println("Enemy kill some of your crew\n");
+            if(player.getCrewNumber()-10<=0){
+                player.setLife(player.getLife()-1);
+                gui.setLife(player.getLife());
+            }
+            else{
+                player.setCrewNumber(player.getCrewNumber()-10);
+                gui.setCrew(player.getCrewNumber());
+                gui.println("Enemy kill some of your crew\n");
+            }
         }
     }
     /**
@@ -341,23 +352,44 @@ public class GameEngine {
             return;
         }
         String givenItem=command.getSecondWord();
-        if(player.checkItemInTheBag(givenItem)!=null){
-            gui.print(currentRoom.giveCharactersItem(player.checkItemInTheBag(givenItem)));
-            player.removeItemFromBag(givenItem);
-            gui.setBagContain(player.getTotalWeight(),player.getWeight()+player.getTotalWeight());
+        if(currentRoom.checkCharatersInTheRoom("wanoKuni")!=null){
+            if(player.getSolde()- currentRoom.checkCharatersInTheRoom("wanoKuni").getItem().getPrice() >0){
+                player.setSolde(player.getSolde()- currentRoom.checkCharatersInTheRoom("wanoKuni").getItem().getPrice());
+                gui.setSolde(player.getSolde());
+                gui.println(currentRoom.checkCharatersInTheRoom("wanoKuni").getHelp());
+            }else{
+                gui.println("You don't have enough money Sorry");
+            }
         }
         else{
-            gui.print("You don't have this item in your bag !");
+            if(player.checkItemInTheBag(givenItem)!=null){
+                gui.print(currentRoom.giveCharactersItem(player.checkItemInTheBag(givenItem)));
+                player.removeItemFromBag(givenItem);
+                gui.setBagContain(player.getTotalWeight(),player.getWeight()+player.getTotalWeight());
+            }
+            else{
+                gui.print("You don't have this item in your bag !");
+            }
         }
     }
     /**
     * Print goodbye and enable the entry field
     */
     private void endGame() {
+        currentRoom.setImageName("src/images/lose.jpg");
+        gui.showImage(currentRoom.getImageName());
 		gui.println("Thank you for playing.  Good bye !");
         gui.enable(false);
     }
     
+    private void winGame() {
+        
+        currentRoom.setImageName("src/images/win.png");
+        gui.showImage(currentRoom.getImageName());
+		gui.println("Youu WINNNNNNNN!");
+        gui.enable(false);
+    }
+
     /**
     * Print the long description of the room
     */
@@ -388,8 +420,6 @@ public class GameEngine {
         }
     }
     private void talk(){
-        currentRoom.setImageName("src/images/kokoyashi1.png");
-        gui.showImage(currentRoom.getImageName());
         gui.println(currentRoom.getCharactersHi());
     }
     /**
@@ -403,6 +433,8 @@ public class GameEngine {
                 gui.setSolde(player.getSolde());
                 gui.println("Thank you see you soon");
                 scenario.getRoomByName("elMourouj").setExits("southEast", scenario.getRoomByName("laMarsa"));
+                scenario.getRoomByName("elMourouj").setExits("southWest", scenario.getRoomByName("rafel"));
+
             }else{
                 gui.println("You don't have enough money sorry");
                 endGame();
@@ -431,7 +463,7 @@ public class GameEngine {
     		return;
     	}
     	String eatItem=command.getSecondWord();
-        String[] validItemToEat = {"cookie","apple"};
+        String[] validItemToEat = {"cookie","apple","kiwi","banana","amande","avocat","orange"};
         for(int i=0;i<validItemToEat.length;i++){
             if(eatItem.equals(validItemToEat[i])){
             	if(player.checkItemInTheBag(eatItem)!=null){

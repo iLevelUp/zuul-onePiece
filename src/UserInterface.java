@@ -70,7 +70,6 @@ public class UserInterface implements ActionListener{
 	        entryField.setEditable(on);
 	        if(!on) {
 	            entryField.getCaret().setBlinkRate(0);
-	            showImage("src/images/lose.jpg");
 				look.removeActionListener(this);
 				north.removeActionListener(this);
 				northEast.removeActionListener(this);
