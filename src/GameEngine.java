@@ -31,7 +31,7 @@ public class GameEngine {
     public GameEngine() {
         parser = new Parser();
         displacement = new Stack<Room>();
-        player = new Player("sangoku", 250, currentRoom, 50,50,0,30,3);
+        player = new Player("sangoku", 250, currentRoom, 50,50,4,30,3);
         scenario=new Scenario();
         currentRoom=scenario.getStartRoom();
     }
@@ -226,7 +226,6 @@ public class GameEngine {
     private void printHelp() 
     {
         gui.println("You are lost. You are alone. You wander");
-        gui.println("around at Saint Denis, University Campus." + "\n");
         gui.print(parser.showCommands());
     }
 
@@ -281,6 +280,9 @@ public class GameEngine {
         	player.setLocation(nextRoom);
             currentRoom = nextRoom;
             gui.println(currentRoom.getLongDescription());
+            
+            gui.setButtonColor(currentRoom.getExitButton());
+            gui.setTitle(currentRoom.getName());
             if(currentRoom.getImageName() != null)
                 gui.showImage(currentRoom.getImageName());
         }
@@ -302,17 +304,20 @@ public class GameEngine {
                 if(currentRoom.checkItemInTheRoom(newItem).getName()=="money"){
                     player.setSolde(currentRoom.checkItemInTheRoom(newItem).getPrice()+player.getSolde());
                     gui.setSolde(player.getSolde());
+                    gui.print("You are rich !");
                 }
                 else if(currentRoom.checkItemInTheRoom(newItem).getName()=="magicKey"){
                     player.setMagicKeys(player.getMagicKeys()+1);
                     gui.setKeys(player.getMagicKeys());
                     currentRoom.removeItems(newItem);
+                    gui.println("Good find out other key");
                 }
                 else{
         		    player.addItemToBag(player, currentRoom.checkItemInTheRoom(newItem));
                     //player.setWeight(player.getWeight()+currentRoom.checkItemInTheRoom(newItem).getWeight());
                     currentRoom.removeItems(newItem);
                     gui.setBagContain(player.getTotalWeight(),player.getWeight()+player.getTotalWeight());
+                    gui.println("You just took a "+newItem);
                 }
 
         	}else {
@@ -338,6 +343,7 @@ public class GameEngine {
         	currentRoom.addItems(dropItem, player.checkItemInTheBag(dropItem));
             player.removeItemFromBag(dropItem);
             gui.setBagContain(player.getTotalWeight(),player.getWeight()+player.getTotalWeight());
+            gui.println("You dropped "+dropItem);
         }
         else{
             gui.print("Item does'nt present in your bag");
@@ -357,6 +363,15 @@ public class GameEngine {
                 player.setSolde(player.getSolde()- currentRoom.checkCharatersInTheRoom("wanoKuni").getItem().getPrice());
                 gui.setSolde(player.getSolde());
                 gui.println(currentRoom.checkCharatersInTheRoom("wanoKuni").getHelp());
+            }else{
+                gui.println("You don't have enough money Sorry");
+            }
+        }
+        else if(currentRoom.checkCharatersInTheRoom("pontDuJoie")!=null){
+            if(player.getSolde()- currentRoom.checkCharatersInTheRoom("pontDuJoie").getItem().getPrice() >0){
+                player.setSolde(player.getSolde()- currentRoom.checkCharatersInTheRoom("pontDuJoie").getItem().getPrice());
+                gui.setSolde(player.getSolde());
+                gui.println(currentRoom.checkCharatersInTheRoom("pontDuJoie").getHelp());
             }else{
                 gui.println("You don't have enough money Sorry");
             }
@@ -434,6 +449,8 @@ public class GameEngine {
                 gui.println("Thank you see you soon");
                 scenario.getRoomByName("elMourouj").setExits("southEast", scenario.getRoomByName("laMarsa"));
                 scenario.getRoomByName("elMourouj").setExits("southWest", scenario.getRoomByName("rafel"));
+                gui.setButtonColor(currentRoom.getExitButton());
+
 
             }else{
                 gui.println("You don't have enough money sorry");
@@ -448,8 +465,28 @@ public class GameEngine {
         if(player.getLocation()==scenario.getRoomByName("pontDuJoie")){
             if(player.getMagicKeys()==4){
                 scenario.getRoomByName("pontDuJoie").setExits("east",scenario.getWinRoom());
+                gui.println("Door Opening ...");
+                gui.setButtonColor(currentRoom.getExitButton());
+
             }else{
                 gui.println("You must have 4 key before \n");
+            }
+        }
+        //tatami.setExits("north",darka);
+        else if(player.getLocation()==scenario.getRoomByName("tatami")){
+            if(player.checkItemInTheBag("darkaKey")!=null){
+                scenario.getRoomByName("tatami").setExits("north",scenario.getRoomByName("darka"));
+                gui.println("Cool you got the key there a new room north");
+                gui.setButtonColor(currentRoom.getExitButton());
+
+            }
+        }
+        else if(player.getLocation()==scenario.getRoomByName("krakenland")){
+            if(player.checkItemInTheBag("OrtopiaKey")!=null){
+                scenario.getRoomByName("krakenland").setExits("south", scenario.getRoomByName("ortopia"));
+                gui.println("Door south opened ");
+                gui.setButtonColor(currentRoom.getExitButton());
+
             }
         }
     }
@@ -463,7 +500,7 @@ public class GameEngine {
     		return;
     	}
     	String eatItem=command.getSecondWord();
-        String[] validItemToEat = {"cookie","apple","kiwi","banana","amande","avocat","orange"};
+        String[] validItemToEat = {"cookie","apple","kiwi","banana","amande","avocat","orange","watermelon"};
         for(int i=0;i<validItemToEat.length;i++){
             if(eatItem.equals(validItemToEat[i])){
             	if(player.checkItemInTheBag(eatItem)!=null){

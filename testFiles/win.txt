@@ -1,0 +1,59 @@
+go north
+go east
+take beamer
+go west
+go west
+give money
+go east
+go northWest
+take ammo
+take gold
+attack Dalton5
+go north
+go north
+take cookie
+go south
+go northEast
+attack Dalton6
+hire
+go southEast
+take magicKey
+go southEast
+take kiwi
+eat kiwi
+go south
+take avocat
+eat avocat
+go southEast
+attack Dalton4
+go east
+take magicKey
+take money
+go northWest
+go southWest
+take magicKey
+go west
+go southEast
+go northEast
+go east
+go northEast
+go north
+take magicKey
+hire
+go south
+take banana
+eat banana
+go northWest
+go northWest
+pay
+go southWest
+go north
+talk
+give money
+open
+go east
+attack Dalton7
+hire
+hire
+attack Dalton7
+take OnePiece

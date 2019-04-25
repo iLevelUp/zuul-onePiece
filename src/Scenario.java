@@ -15,32 +15,32 @@ public class Scenario{
         TransporterRoom sakura;
         sakura =new TransporterRoom("Transporter","Transporter room in this room you can be tranported to a random room", "src/images/teleport.gif");
         
-        cocoyashi = new Room("Cocoyashi","", "src/images/kokoyashi.png");
-        nooberland = new Room("Nooberland","", "src/images/Nooberland.png");
-        wanoKuni = new Room("Wanokuni","" ,"src/images/wanokuni.png");
-        water7 = new Room("Water7","", "src/images/Water_Seven.png");
-        kalen = new Room("Kalen", "","src/images/kalen.png");
-        ortopia = new Room("Ortopia","", "src/images/Ortopia.png");
-        alabasta = new Room("Alabasta if you give me gold i will get to room that can help you","","src/images/Alabasta.png");
-        krakenland = new Room("Krakenland","", "src/images/Krakenland.png");
-        amazoneLily = new Room("Amazone_lily","", "src/images/AmazonLily.png");
-        skypia = new Room("Skypia","", "src/images/skypia.png");
-        paris8 = new Room("Paris8","","src/images/paris8.png");
-        rafel = new Room("Rafel","", "src/images/raftel.png");
-        pontDuJoie = new Room("Pont Du joie there a locked room over here ","", "src/images/pontdujoie.png");
-        elMourouj = new Room("El Mourouj","","src/images/elmourouj.jpg");
-        parcB = new Room("Parc B c'est un parc de l'Esperance Sportif De Tunis fondé en 1919","", "src/images/parcb.jpg");
-        laMarsa = new Room("La marsa c'est la plage la plus douce ", "","src/images/lamarsa.jpg");
-        sidiBouSaid = new Room("Sidi bou Said c'est la meilleur vue du monde ","", "src/images/sidibousaid.jpg");
-        theJackPot=new Room("","","src/images/monster.gif");
-        fedayn =new Room("fedayn room ","","src/images/fedayn.jpg");
-        tatami =new Room("tatami room","","src/images/tatami.jpg");
-        darka =new Room("darka room ","","src/images/darka.jpg");
-        tonyMontana =new Room("tony Montana room","","src/images/tonyMontana.jpg");
-        yokoshima =new Room("yokoshima room","","src/images/yokoshima.png");
-        pnl =new Room("pnl room","","src/images/pnl.jpg");
-        philadelphia=new Room("philadelphia room","","src/images/philadelphia.jpg");
-        tosoma=new Room("tosoma room","","src/images/tosoma.jpg");
+        cocoyashi = new Room("Cocoyashi","This room is your start point cocoyashi", "src/images/kokoyashi.png");
+        nooberland = new Room("Nooberland","is a famous gold ressources", "src/images/Nooberland.png");
+        wanoKuni = new Room("Wanokuni","In this island you find some interessting stuff" ,"src/images/wanokuni.png");
+        water7 = new Room("Water7","There is some dangerous wave here pay attention", "src/images/Water_Seven.png");
+        kalen = new Room("Kalen","This is an old army base","src/images/kalen.png");
+        ortopia = new Room("Ortopia","Legacy of legend are here", "src/images/Ortopia.png");
+        alabasta = new Room("Alabasta","Popular Room of vampires","src/images/Alabasta.png");
+        krakenland = new Room("Krakenland","was one of the leader bank in world", "src/images/Krakenland.png");
+        amazoneLily = new Room("Amazone_lily","The forest on amazonia", "src/images/AmazonLily.png");
+        skypia = new Room("Skypia","The sky is a little bit nervous here", "src/images/skypia.png");
+        paris8 = new Room("Paris8","One of the best university in the world","src/images/paris8.png");
+        rafel = new Room("Rafel","this island was has been inhabited by Rafel of ninja Turtul", "src/images/raftel.png");
+        pontDuJoie = new Room("Pont Du joie","Artistic room and there a locked room over here", "src/images/pontdujoie.png");
+        elMourouj = new Room("El Mourouj","you'll find a subway in the sky","src/images/elmourouj.jpg");
+        parcB = new Room("Parc B","A football team live here", "src/images/parcb.jpg");
+        laMarsa = new Room("La marsa", "a good beach over here","src/images/lamarsa.jpg");
+        sidiBouSaid = new Room("Sidi bou Said","Sunshine and best view in the coin", "src/images/sidibousaid.jpg");
+        theJackPot=new Room("Final","The monster Room there is the Dalton7","src/images/monster.gif");
+        fedayn =new Room("fedayn","A support group lovely and helpful","src/images/fedayn.jpg");
+        tatami =new Room("tatami","A crossline of many mysterious ways","src/images/tatami.jpg");
+        darka =new Room("darka","A party island for having fun","src/images/darka.jpg");
+        tonyMontana =new Room("tony Montana","An old friend of you lived here","src/images/tonyMontana.jpg");
+        yokoshima =new Room("yokoshima","A japanis plate over here","src/images/yokoshima.png");
+        pnl =new Room("pnl","A famous group of hip hop music","src/images/pnl.jpg");
+        philadelphia=new Room("philadelphia","The downtown of rooms pnl and tosoma rooms","src/images/philadelphia.jpg");
+        tosoma=new Room("tosoma","Tosoma is a big chinese town","src/images/tosoma.jpg");
 
         // initialise room exits & items
         cocoyashi.setExits("north", nooberland);
@@ -81,7 +81,7 @@ public class Scenario{
         alabasta.setExits("east",fedayn);
         alabasta.addCharacters("alabsa",new Characters("mehdy", "hi give me sakura flavour i'll help you", "Go west-> southWest-> west \nyou'll find money",new Item("sakura","sakura flavour",40,10)));
 
-        krakenland.setExits("south", ortopia);
+        //krakenland.setExits("south", ortopia);
         krakenland.setExits("west", skypia);
         krakenland.addItems("watermelon",new Item("watermelon", "fruit is good",15, 20));
 
@@ -110,7 +110,7 @@ public class Scenario{
         rafel.setExits("southWest", skypia);
         rafel.setExits("north", pontDuJoie);
         rafel.setExits("southEast", parcB);
-        rafel.addItems("OtropiaKey", new Item("OtropiaKey", "this is a key of a room ", 50, 10));
+        rafel.addItems("OrtopiaKey", new Item("OrtopiaKey", "this is a key of a room ", 50, 10));
         rafel.addEnemies("Dalton6",new Enemy("Dalton6","Dalton6","i'll kill you", new Item("gold","you can sell gold",50,35), 80));
 
         pontDuJoie.setExits("south", rafel);
@@ -127,7 +127,6 @@ public class Scenario{
         
         sakura.addItems("sakura",new Item("sakura","this is sakura flavour",15,20));
 
-        tatami.setExits("north",darka);
         tatami.setExits("northEast",tonyMontana);
         tatami.setExits("east",yokoshima);
         tatami.setExits("west",sidiBouSaid);
@@ -149,7 +148,7 @@ public class Scenario{
         philadelphia.setExits("east",pnl);
         philadelphia.setExits("south",tosoma);
         philadelphia.addEnemies("Dalton4",new Enemy("Dalton4", "Hey you !","i'll kill you", new Item("banana", "fruit is good", 40, 20), 60));
-        
+        philadelphia.addItems("darkaKey", new Item("darkaKey","key of a room",0,0));
         tosoma.setExits("north", philadelphia);
         tosoma.addItems("kiwi", new Item("kiwi","fruit is good",35,25));
 

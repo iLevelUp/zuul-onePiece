@@ -14,6 +14,8 @@ package src;
 * @version 2006.03.30
 */
 import java.util.HashMap;
+import java.util.ArrayList; // import the ArrayList class
+
 //import java.util.Set;
 
 
@@ -90,6 +92,14 @@ public class Room {
         for(String exit : exits.keySet())
             returnString.append(" "+ exit);
         return returnString;
+    }
+
+    public ArrayList<String> getExitButton(){
+        ArrayList<String> exiting = new ArrayList<String>(); // Create an ArrayList object
+        for(String exit:exits.keySet()){
+            exiting.add(exit);
+        }
+        return exiting;
     }
     /**
     * Return the room that is reached if we go from this

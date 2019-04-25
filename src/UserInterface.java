@@ -3,6 +3,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.net.URL;
+import java.util.ArrayList; // import the ArrayList class
+
 //import java.awt.image.*;
 public class UserInterface implements ActionListener{
 
@@ -97,8 +99,8 @@ public class UserInterface implements ActionListener{
 	        log = new JTextArea();
 	        log.setEditable(false);
 	        JScrollPane listScroller = new JScrollPane(log);
-	        listScroller.setPreferredSize(new Dimension(200, 200));
-	        listScroller.setMinimumSize(new Dimension(100,100));
+	        listScroller.setPreferredSize(new Dimension(400, 200));
+	        listScroller.setMinimumSize(new Dimension(250,100));
 
 	        JPanel panel = new JPanel();
 	        image = new JLabel();
@@ -155,7 +157,6 @@ public class UserInterface implements ActionListener{
 	        north.addActionListener(this);
 			panel.add(north,gbc);
 
-
 			northEast=new JButton("North East");
 			northEast.setPreferredSize(new Dimension(120, 20));
 			gbc.gridx=4;
@@ -176,6 +177,7 @@ public class UserInterface implements ActionListener{
 
 			none=new JButton(" ");
 			none.setPreferredSize(new Dimension(120, 20));
+			none.setBackground(Color.GRAY);
 			gbc.gridx=3;
 			gbc.gridy=4;
 			gbc.gridheight=1;
@@ -190,8 +192,6 @@ public class UserInterface implements ActionListener{
 	        gbc.gridwidth=1;
 	        east.addActionListener(this);
 			panel.add(east,gbc);
-
-			
 
 			southWest=new JButton("South West");
 			southWest.setPreferredSize(new Dimension(120, 20));
@@ -378,7 +378,61 @@ public class UserInterface implements ActionListener{
 		public void setKeys(int x ){
 			String newKeys="Keys "+Integer.toString(x)+"/4";
 			keys.setText(newKeys);
-		}	
+		}
+		
+		public void setTitle(String title){
+			myFrame.setTitle(title);
+		}
+
+		public void setButtonColor(ArrayList<String> list){
+			north.setBackground(null);
+			south.setBackground(null);
+			west.setBackground(null);
+			east.setBackground(null);
+			northWest.setBackground(null);
+			southWest.setBackground(null);
+			northEast.setBackground(null);
+			southEast.setBackground(null);
+
+			String [] colors ={"north","south","west","east","northWest","southWest","northEast","southEast"};
+			for(String x : list){ 
+				for(int i=0;i<colors.length;i++){
+					if(x==colors[i]){
+						colors[i]="";
+					}
+				}
+			}
+			System.out.println("-------------------");
+			for(int i=0;i<colors.length;i++){
+				System.out.println(colors[i]);
+			}
+			for(String x:colors){
+				if(x=="north"){
+					north.setBackground(Color.GRAY);
+				}
+				else if(x=="south"){
+					south.setBackground(Color.GRAY);
+				}
+				else if(x=="west"){
+					west.setBackground(Color.GRAY);
+				}
+				else if(x=="east"){
+					east.setBackground(Color.GRAY);
+				}
+				else if(x=="northWest"){
+					northWest.setBackground(Color.GRAY);
+				}
+				else if(x=="southWest"){
+					southWest.setBackground(Color.GRAY);
+				}
+				else if(x=="northEast"){
+					northEast.setBackground(Color.GRAY);
+				}
+				else if(x=="southEast"){
+					southEast.setBackground(Color.GRAY);
+				}
+			}
+		}
 	    /**
 	     * A command has been entered. Read the command and do whatever is 
 	     * necessary to process it.
