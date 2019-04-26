@@ -31,7 +31,7 @@ public class GameEngine {
     public GameEngine() {
         parser = new Parser();
         displacement = new Stack<Room>();
-        player = new Player("sangoku", 250, currentRoom, 50,50,4,30,3);
+        player = new Player("sangoku", 250, currentRoom, 50,50,4,800,3);
         scenario=new Scenario();
         currentRoom=scenario.getStartRoom();
     }
@@ -54,6 +54,7 @@ public class GameEngine {
 
         do {
             LocalTime currentTime = LocalTime.now();
+            gui.sound("src/music/Pirate.wav");
             if (currentTime.getMinute() == localTime3.getMinute()) {
                 endGame();
                 finish = 1;
@@ -169,7 +170,6 @@ public class GameEngine {
     		return;
     	}
         String name=command.getSecondWord();
-        
         if((currentRoom.checkEnemiesInTheRoom(name)).getStrength()<player.getStrength()){
             currentRoom.addItems(currentRoom.checkEnemiesInTheRoom(name).getItem().getName(),currentRoom.checkEnemiesInTheRoom(name).getItem());
             currentRoom.removeEnemy(currentRoom.checkEnemiesInTheRoom(name).getName());
@@ -191,12 +191,15 @@ public class GameEngine {
     * Get you back to the room just before 
     */
     private void backRoom() {
-    	if (displacement.isEmpty())
-    		gui.println("You are at the start Point");
+    	if (displacement.isEmpty()){
+            gui.println("You are at the start Point");
+            gui.setButtonColor(currentRoom.getExitButton());
+        }
     	else {
     		currentRoom=displacement.pop();
     		gui.println("You back to "+currentRoom.getDescription());
-    		gui.println("You Maybe Missed those "+currentRoom.getItemsDescription());
+            gui.println("You Maybe Missed those "+currentRoom.getItemsDescription());
+            gui.setButtonColor(currentRoom.getExitButton());
     		if(currentRoom.getImageName()!=null)
     			gui.showImage(currentRoom.getImageName());
     	}
@@ -314,7 +317,6 @@ public class GameEngine {
                 }
                 else{
         		    player.addItemToBag(player, currentRoom.checkItemInTheRoom(newItem));
-                    //player.setWeight(player.getWeight()+currentRoom.checkItemInTheRoom(newItem).getWeight());
                     currentRoom.removeItems(newItem);
                     gui.setBagContain(player.getTotalWeight(),player.getWeight()+player.getTotalWeight());
                     gui.println("You just took a "+newItem);
@@ -393,13 +395,14 @@ public class GameEngine {
     private void endGame() {
         currentRoom.setImageName("src/images/lose.jpg");
         gui.showImage(currentRoom.getImageName());
+        gui.println("Youu Loose !");
 		gui.println("Thank you for playing.  Good bye !");
         gui.enable(false);
     }
     
     private void winGame() {
         
-        currentRoom.setImageName("src/images/win.png");
+        currentRoom.setImageName("src/images/win.jpg");
         gui.showImage(currentRoom.getImageName());
 		gui.println("Youu WINNNNNNNN!");
         gui.enable(false);

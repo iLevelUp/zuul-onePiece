@@ -7,8 +7,8 @@ package src;
 * This class holds an enumeration of all command words known to the game.
 * It is used to recognise commands as they are typed in.
 *
-* @author  Michael Kolling and David J. Barnes
-* @version 2006.03.30
+* @author  Ghouibi Ghassen
+* @version 3.0 (April 2019)
 */
 import java.util.*;
 public class CommandWords
