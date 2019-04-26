@@ -123,6 +123,11 @@ public class Player {
 
 	public String showMyBag() {
 		return "Your bag contain :" +bag.getItemsDescription()+" Totalise "+ bag.getTotalWeight()+"/"+getWeight()+" Kg";
-  }
+	}
+	
+	public void walk(String direction){
+	
+
+	}
 	
 }

@@ -20,9 +20,9 @@ public class Scenario{
         wanoKuni = new Room("Wanokuni","In this island you find some interessting stuff" ,"src/images/wanokuni.jpg");
         water7 = new Room("Water7","There is some dangerous wave here pay attention", "src/images/water7.jpg");
         kalen = new Room("Kalen","This is an old army base","src/images/kalen.jpg");
-        ortopia = new Room("Ortopia","Legacy of legend are here", "src/images/ortopia.jpg");
+        ortopia = new Room("Ortopia","Legacy of legend are here", "src/images/otropia.jpg");
         alabasta = new Room("Alabasta","Popular Room of vampires","src/images/alabasta.jpg");
-        krakenland = new Room("Krakenland","was one of the leader bank in world", "src/images/krakenland.jpg");
+        krakenland = new Room("Krakenland","was one of the leader bank in world a locked room here", "src/images/krakenland.jpg");
         amazoneLily = new Room("Amazone_lily","The forest on amazonia", "src/images/amazonelily.jpg");
         skypia = new Room("Skypia","The sky is a little bit nervous here", "src/images/skypia.jpg");
         paris8 = new Room("Paris8","One of the best university in the world","src/images/paris8.jpg");
@@ -37,7 +37,7 @@ public class Scenario{
         tatami =new Room("tatami","A crossline of many mysterious ways","src/images/tatami.jpg");
         darka =new Room("darka","A party island for having fun","src/images/darka.jpg");
         tonyMontana =new Room("tony Montana","An old friend of you lived here","src/images/tonyMontana.jpg");
-        yokoshima =new Room("yokoshima","A japanis plate over here","src/images/yokoshima.png");
+        yokoshima =new Room("yokoshima","A japanis plate over here","src/images/yokoshima.jpg");
         pnl =new Room("pnl","A famous group of hip hop music","src/images/pnl.jpg");
         philadelphia=new Room("philadelphia","The downtown of rooms pnl and tosoma rooms","src/images/philadelphia.jpg");
         tosoma=new Room("tosoma","Tosoma is a big chinese town","src/images/tosoma.jpg");
@@ -46,8 +46,6 @@ public class Scenario{
         cocoyashi.setExits("north", nooberland);
         cocoyashi.addItems("silver", new Item("silver", "you can sell silver to get money", 50, 10));
         cocoyashi.addCharacters("cocoyashi", new Characters("Dali", "I can help you if you give me some gold","Go north -> west -> west \nyou'll find a transporter room that take you to a random room", new Item("gold", "you can sell gold to get money", 10, 10) ));
-        //cocoyashi.addEnemies("dalton", new Enemy("dalton","Hi if you won i'll give you and item ","let's fight",new Item("gold", "you can sell gold to get money", 10, 10), 50));
-        //cocoyashi.addItems("magicKey",new Item("magicKey", "One of the magic key", 0, 0));
 
         nooberland.setExits("east", water7);
         nooberland.setExits("south", cocoyashi);

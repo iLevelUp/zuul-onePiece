@@ -6,8 +6,8 @@
 *  the game.  It also evaluates and executes the commands that 
 *  the parser returns.
 * 
-* @author  Michael Kolling and David J. Barnes
-* @version 1.0 (Jan 2003)
+* @author  Ghouibi Ghassen
+* @version 3.0 (April 2019)
 */
 package src;
 
@@ -22,8 +22,9 @@ public class GameEngine {
     private UserInterface gui;
     private Stack<Room> displacement;
     private Player player;
-    private Room   beamerCharged;
-    private Scenario  scenario;
+    private Room beamerCharged;
+    private Scenario scenario;
+    private Save save;
 
     /**
      * Create the game and initialise its internal map.
@@ -31,9 +32,10 @@ public class GameEngine {
     public GameEngine() {
         parser = new Parser();
         displacement = new Stack<Room>();
-        player = new Player("sangoku", 250, currentRoom, 50,50,4,800,3);
-        scenario=new Scenario();
-        currentRoom=scenario.getStartRoom();
+        player = new Player("sangoku", 250, currentRoom, 50, 50, 4, 800, 3);
+        scenario = new Scenario();
+        currentRoom = scenario.getStartRoom();
+        save = new Save();
     }
 
     /**
@@ -43,6 +45,13 @@ public class GameEngine {
         gui = userInterface;
     }
 
+    /***
+     * The play function that allow to get real time the player will have 20 minute
+     * to win or he will die the crew also die every 1 minutes if he hav'nt
+     * resources he must eat
+     * 
+     * @param userInterface
+     */
     public void play(UserInterface userInterface) {
         setGUI(userInterface);
         printWelcome();
@@ -50,7 +59,7 @@ public class GameEngine {
         // Maybe giving some extra time
         LocalTime time = LocalTime.now();
         LocalTime localTime3 = time.plusMinutes(10);
-        LocalTime  breakfeastTime= time.plusMinutes(1);
+        LocalTime breakfeastTime = time.plusMinutes(1);
 
         do {
             LocalTime currentTime = LocalTime.now();
@@ -59,19 +68,19 @@ public class GameEngine {
                 endGame();
                 finish = 1;
             }
-            if(currentTime.getMinute()== breakfeastTime.getMinute() ){
-                player.setStrength(player.getStrength()-10);
+            if (currentTime.getMinute() == breakfeastTime.getMinute()) {
+                player.setStrength(player.getStrength() - 10);
                 gui.setStrength(player.getStrength());
-                breakfeastTime=currentTime.plusMinutes(1);
+                breakfeastTime = currentTime.plusMinutes(1);
             }
-            
-            if(player.getStrength()<=0 || player.getLife()==0){
+
+            if (player.getStrength() <= 0 || player.getLife() == 0) {
                 endGame();
-                finish =1;
+                finish = 1;
             }
-            if(player.checkItemInTheBag("OnePiece")!=null){
+            if (player.checkItemInTheBag("OnePiece") != null) {
                 winGame();
-                finish=1;
+                finish = 1;
             }
         } while (finish != 1);
     }
@@ -83,6 +92,8 @@ public class GameEngine {
         gui.print("\n");
         gui.println("Welcome to One Piece treasure cruise!");
         gui.println("One Piece is a new, incredibly boring adventure game.");
+        gui.println(
+                "You must find ou 4 key to get to the final room and kill the boss\n if you pick up the coin you'll win\n");
         gui.println("Type 'help' if you need help.");
         gui.print("\n");
         gui.println(currentRoom.getLongDescription());
@@ -96,6 +107,8 @@ public class GameEngine {
      */
     public void interpretCommand(Command commandLine) {
         CommandWord commandWord = commandLine.getCommandWord();
+
+        save.save(commandWord.toString() + " " + commandLine.getSecondWord());
 
         switch (commandWord) {
 
@@ -115,7 +128,7 @@ public class GameEngine {
             look();
             break;
         case TEST:
-            testFile(commandLine);
+            testFile(commandLine, "testFiles/");
             break;
         case TAKE:
             take(commandLine);
@@ -150,8 +163,18 @@ public class GameEngine {
         case GIVE:
             give(commandLine);
             break;
+        case SAVE:
+            if (commandLine.getSecondWord() == null)
+                gui.print("<usage> you must write a file name");
+            else
+                save.rename(commandLine.getSecondWord());
+            break;
+        case RECOVER:
+            testFile(commandLine, "savedGames/");
+            break;
+
         case QUIT:
-            if(commandLine.hasSecondWord())
+            if (commandLine.hasSecondWord())
                 gui.println("Quit what?");
             else
                 endGame();
@@ -160,97 +183,106 @@ public class GameEngine {
             gui.println("I don't know what you mean...");
             break;
         }
-        
+
     }
 
-    private void attack(Command command){
-        
-        if(!command.hasSecondWord()) {
-    		gui.print("attack Who ?");
-    		return;
-    	}
-        String name=command.getSecondWord();
-        if((currentRoom.checkEnemiesInTheRoom(name)).getStrength()<player.getStrength()){
-            currentRoom.addItems(currentRoom.checkEnemiesInTheRoom(name).getItem().getName(),currentRoom.checkEnemiesInTheRoom(name).getItem());
+    /**
+     * this function attack enemies if you kill enemies you can pick up stuff to eat
+     * or other
+     * 
+     * @param command
+     */
+    private void attack(Command command) {
+
+        if (!command.hasSecondWord()) {
+            gui.print("attack Who ?");
+            return;
+        }
+        String name = command.getSecondWord();
+        if ((currentRoom.checkEnemiesInTheRoom(name)).getStrength() < player.getStrength()) {
+            currentRoom.addItems(currentRoom.checkEnemiesInTheRoom(name).getItem().getName(),
+                    currentRoom.checkEnemiesInTheRoom(name).getItem());
             currentRoom.removeEnemy(currentRoom.checkEnemiesInTheRoom(name).getName());
             gui.println("Enemy killed");
-        }
-        else{
-            if(player.getCrewNumber()-10<=0){
-                player.setLife(player.getLife()-1);
+        } else {
+            if (player.getCrewNumber() - 10 <= 0) {
+                player.setLife(player.getLife() - 1);
                 gui.setLife(player.getLife());
-            }
-            else{
-                player.setCrewNumber(player.getCrewNumber()-10);
+            } else {
+                player.setCrewNumber(player.getCrewNumber() - 10);
                 gui.setCrew(player.getCrewNumber());
                 gui.println("Enemy kill some of your crew\n");
             }
         }
     }
+
     /**
-    * Get you back to the room just before 
-    */
+     * Get you back to the room just before
+     */
     private void backRoom() {
-    	if (displacement.isEmpty()){
+        if (displacement.isEmpty()) {
             gui.println("You are at the start Point");
             gui.setButtonColor(currentRoom.getExitButton());
-        }
-    	else {
-    		currentRoom=displacement.pop();
-    		gui.println("You back to "+currentRoom.getDescription());
-            gui.println("You Maybe Missed those "+currentRoom.getItemsDescription());
+        } else {
+            currentRoom = displacement.pop();
+            gui.println("You back to " + currentRoom.getDescription());
+            gui.println("You Maybe Missed those " + currentRoom.getItemsDescription());
             gui.setButtonColor(currentRoom.getExitButton());
-    		if(currentRoom.getImageName()!=null)
-    			gui.showImage(currentRoom.getImageName());
-    	}
+            if (currentRoom.getImageName() != null)
+                gui.showImage(currentRoom.getImageName());
+        }
     }
-    
 
-    private void charge(){
-        if(player.checkItemInTheBag("beamer")!=null){
-            if(player.checkItemInTheBag("ammo")!=null){
+    /**
+     * This function charge your beamer that allow's you to remeber this room
+     */
+    private void charge() {
+        if (player.checkItemInTheBag("beamer") != null) {
+            if (player.checkItemInTheBag("ammo") != null) {
                 player.removeItemFromBag("ammo");
-                beamerCharged=currentRoom;
-            }
-            else{
+                beamerCharged = currentRoom;
+            } else {
                 gui.println("You are OUT OF AMMO");
             }
-        }
-        else{
+        } else {
             gui.println("You must have a beamer first");
         }
     }
-    
+
     /**
-    * Print out some help information.
-    * Here we print some stupid, cryptic message and a list of the 
-    * command words.
-    */
-    private void printHelp() 
-    {
+     * Print out some help information. Here we print some stupid, cryptic message
+     * and a list of the command words.
+     */
+    private void printHelp() {
         gui.println("You are lost. You are alone. You wander");
         gui.print(parser.showCommands());
     }
 
-	
-    /** 
-    * Tests for the game with files
-    * this function will excute all command present in the file line by line 
-    * @param  Command the command enter by th user
-    */
-    private void testFile(Command command){
-    	if(!command.hasSecondWord()) {
-    		gui.println("Test what ?\n<usage> you have to put a file name ");
-    		return;
-    	}    	
+    /**
+     * Tests for the game with files this function will excute all command present
+     * in the file line by line
+     * 
+     * @param Command the command enter by th user
+     */
+    private void testFile(Command command, String path) {
+        if (!command.hasSecondWord()) {
+            gui.println("\n<usage> you have to put a file name ");
+            return;
+        }
         String line = null;
-        String fileName="testFiles/"+command.getSecondWord();
+        String fileName = path + command.getSecondWord();
         try {
-     
-            BufferedReader bufferedReader =  new BufferedReader(new FileReader(fileName));
-            while((line = bufferedReader.readLine()) != null) {
+
+            BufferedReader bufferedReader = new BufferedReader(new FileReader(fileName));
+            while ((line = bufferedReader.readLine()) != null) {
                 interpretCommand(parser.getCommand(line));
-            }   
+                try {
+                    Thread.sleep(2000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+         
+            }  
             bufferedReader.close();         
         }
         catch(FileNotFoundException e) {
@@ -286,6 +318,7 @@ public class GameEngine {
             
             gui.setButtonColor(currentRoom.getExitButton());
             gui.setTitle(currentRoom.getName());
+            gui.showImage(currentRoom.getImageName());
             if(currentRoom.getImageName() != null)
                 gui.showImage(currentRoom.getImageName());
         }
@@ -353,7 +386,10 @@ public class GameEngine {
         }
 
     }
-
+    /**
+    * This function give characters money or stuff to help you 
+    * @param command
+    */
     private void give(Command command){
         if(!command.hasSecondWord()){
             gui.print("Give What ?");
@@ -393,18 +429,20 @@ public class GameEngine {
     * Print goodbye and enable the entry field
     */
     private void endGame() {
+        save.clearFile();
         currentRoom.setImageName("src/images/lose.jpg");
         gui.showImage(currentRoom.getImageName());
-        gui.println("Youu Loose !");
-		gui.println("Thank you for playing.  Good bye !");
+		gui.println("Youu Loose !\nThank you for playing.  Good bye !");
         gui.enable(false);
     }
-    
+    /**
+    * Print wining case and enable the entry fields 
+    */
     private void winGame() {
-        
+        save.clearFile();
         currentRoom.setImageName("src/images/win.jpg");
         gui.showImage(currentRoom.getImageName());
-		gui.println("Youu WINNNNNNNN!");
+		gui.println("Youu WINNNNNNNN!\nThank you for playing.  Good bye !");
         gui.enable(false);
     }
 
@@ -422,7 +460,9 @@ public class GameEngine {
         gui.print(player.showMyBag());
         gui.print("\n");
     }
-
+    /**
+    * This function hire new crew to your ship 
+    */
     private void hire(){
         if((player.getSolde()-10)>0 ){
             player.setSolde(player.getSolde()-10);
@@ -437,6 +477,9 @@ public class GameEngine {
             gui.print("You don't have enough money\n");
         }
     }
+    /**
+    * This function allows the player to talk with characters 
+    */
     private void talk(){
         gui.println(currentRoom.getCharactersHi());
     }
@@ -530,7 +573,9 @@ public class GameEngine {
             }
         }
     }
-
+    /**
+    * this function take you to the room where you charge the beamer last time 
+    */
     private void fire(){
         if(beamerCharged!=null){
             currentRoom=beamerCharged;

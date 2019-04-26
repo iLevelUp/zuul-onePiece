@@ -1,8 +1,8 @@
 package src;
 /**
-* This class contains characters in the game which allow the player to talk 
-* with characters. In case the player give an item to a characters if it's 
-* the correct the characters give help to player
+* This class contains Enemies in the game which try to kill the player  
+* The player must be stronger to kill them in the final room he have to kill 
+* the enemy to pick up the coin named "One Piece"
 * @author Ghouibi Ghassen
 * @version 3.0 (April 2019) 
 */

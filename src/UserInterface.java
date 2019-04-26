@@ -65,7 +65,7 @@ public class UserInterface implements ActionListener {
 	public void showImage(String imageName) {
 		URL imageURL = this.getClass().getClassLoader().getResource(imageName);
 		if (imageURL == null)
-			System.out.println("image not found");
+			System.out.println("image not found"+imageName);
 		else {
 			ImageIcon icon = new ImageIcon(imageURL);
 			image.setIcon(icon);
@@ -297,6 +297,8 @@ public class UserInterface implements ActionListener {
 		// add some event listeners to some components
 		myFrame.addWindowListener(new WindowAdapter() {
 			public void windowClosing(WindowEvent e) {
+				Save x=new Save();
+				x.clearFile();
 				System.exit(0);
 			}
 		});
@@ -461,5 +463,3 @@ public class UserInterface implements ActionListener {
 		engine.interpretCommand(parser.getCommand(line));
 	}
 }
-
-
